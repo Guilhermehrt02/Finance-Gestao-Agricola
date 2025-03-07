@@ -1,0 +1,74 @@
+<form
+  [formGroup]="userForm"
+  (ngSubmit)="onSubmit()"
+  class="w-full flex flex-col gap-2 mt-6"
+>
+  <div class="w-full max-w-md mx-auto flex flex-col gap-2">
+    <app-input
+      [id]="'firstName'"
+      [label]="'Nome'"
+      [type]="'text'"
+      [placeholder]="'ex. Jhon'"
+      [required]="true"
+      [fluid]="true"
+      [maxlength]="50"
+      [control]="firstName"
+      class="w-full"
+    ></app-input>
+    <app-input
+      [id]="'lastName'"
+      [label]="'Sobrenome'"
+      [type]="'text'"
+      [placeholder]="'ex. Doe'"
+      [required]="true"
+      [fluid]="true"
+      [maxlength]="50"
+      [control]="lastName"
+      class="w-full"
+    ></app-input>
+
+    <app-input
+      [id]="'email'"
+      [label]="'Email'"
+      [type]="'email'"
+      [placeholder]="'ex. jhon_doe@gmail.com'"
+      [required]="true"
+      [fluid]="true"
+      [maxlength]="100"
+      [control]="email"
+      class="w-full"
+    ></app-input>
+
+    <app-input-mask
+      [id]="'phone'"
+      [label]="'Telefone'"
+      [placeholder]="'ex. (99) 99999-9999'"
+      [required]="true"
+      [fluid]="true"
+      [maxlength]="15"
+      [control]="phone"
+      [mask]="'(99) 99999-9999'"
+      class="w-full"
+    ></app-input-mask>
+
+    <app-input-password
+      [id]="'password'"
+      [label]="'Senha'"
+      [required]="true"
+      [fluid]="true"
+      [maxlength]="18"
+      [control]="password"
+      [feedback]="true"
+      class="w-full"
+    ></app-input-password>
+  </div>
+
+  <app-button
+    class="w-full max-w-96 mt-6 mx-auto"
+    [label]="'Criar conta'"
+    [type]="'submit'"
+    [fluid]="true"
+    [severity]="'primary'"
+    [loading]="loading"
+  ></app-button>
+</form>

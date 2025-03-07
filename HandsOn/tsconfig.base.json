@@ -1,0 +1,60 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hands-on/account": [
+        "lib/ui/pages/settings/src/lib/settings/lib/account/src/index.ts"
+      ],
+      "@hands-on/change-password": [
+        "lib/ui/pages/change-password/src/index.ts"
+      ],
+      "@hands-on/facades": ["lib/core/facades/index.ts"],
+      "@hands-on/footer": [
+        "lib/ui/template/master-page/src/lib/master-page/lib/footer/src/index.ts"
+      ],
+      "@hands-on/guards": ["lib/core/guards/index.ts"],
+      "@hands-on/header": [
+        "lib/ui/template/master-page/src/lib/master-page/lib/header/src/index.ts"
+      ],
+      "@hands-on/home": ["lib/ui/pages/home/src/index.ts"],
+      "@hands-on/interceptors": ["lib/core/interceptors/index.ts"],
+      "@hands-on/main": [
+        "lib/ui/template/master-page/src/lib/master-page/lib/main/src/index.ts"
+      ],
+      "@hands-on/master-page": ["lib/ui/template/master-page/src/index.ts"],
+      "@hands-on/models": ["lib/core/models/index.ts"],
+      "@hands-on/security": [
+        "lib/ui/pages/settings/src/lib/settings/lib/security/src/index.ts"
+      ],
+      "@hands-on/services": ["lib/core/services/index.ts"],
+      "@hands-on/settings": ["lib/ui/pages/settings/src/index.ts"],
+      "@hands-on/sidebar": [
+        "lib/ui/template/master-page/src/lib/master-page/lib/sidebar/sidebar/src/index.ts"
+      ],
+      "@hands-on/sign-in": ["lib/ui/pages/sign-in/src/index.ts"],
+      "@hands-on/sign-up": ["lib/ui/pages/sign-up/src/index.ts"],
+      "@hands-on/ui": ["lib/ui/shared/index.ts"],
+      "@hands-on/user": [
+        "lib/ui/pages/users/src/lib/users/lib/user/src/index.ts"
+      ],
+      "@hands-on/users": ["lib/ui/pages/users/src/index.ts"],
+      "@hands-on/users-list": [
+        "lib/ui/pages/users/src/lib/users/lib/users-list/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

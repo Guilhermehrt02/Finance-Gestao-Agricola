@@ -1,0 +1,40 @@
+<ng-container *ngIf="!loading; else content">
+  <div class="w-full min-h-screen flex">
+    <aside
+      class="w-full max-w-72 max-xl:hidden secondary-background border-r primary-border pt-16"
+    >
+      <p-tieredmenu
+        [model]="menuItems"
+        [style]="{
+          background: 'transparent',
+          border: 'none',
+        }"
+        [baseZIndex]="1000"
+      />
+    </aside>
+
+    <div class="w-full flex flex-col">
+      <lib-header />
+
+      <lib-main class="flex-1">
+        <router-outlet></router-outlet>
+      </lib-main>
+
+      <lib-footer />
+    </div>
+  </div>
+
+  <lib-sidebar [(visible)]="menuVisible" [menuItems]="menuItems" />
+</ng-container>
+
+<ng-template #content>
+  <div class="w-full min-h-screen flex justify-center items-center">
+    <p-progressSpinner
+      [style]="{
+        width: '150px',
+        height: '150px',
+      }"
+      strokeWidth="4"
+    />
+  </div>
+</ng-template>

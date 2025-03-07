@@ -1,0 +1,43 @@
+<div class="max-w-[1600px] min-h-screen mx-auto flex flex-col px-2">
+  <header class="w-full h-14 py-2 flex items-center justify-between">
+    <div class="h-full w-28 bg-white flex items-center justify-center">
+      <p class="text-black">logo</p>
+    </div>
+
+    <div class="flex gap-2 items-center justify-center">
+      <a routerLink="/sign-up">
+        <p-button label="Sign Up" [link]="true"></p-button>
+      </a>
+      <a routerLink="/sign-in">
+        <p-button label="Sign In" [size]="'small'"></p-button>
+      </a>
+    </div>
+  </header>
+
+  <main
+    class="h-full flex-1 flex flex-col sm:flex-row gap-4 items-center justify-center sm:justify-between px-2"
+  >
+    <div class="w-full flex items-center justify-center sm:justify-start">
+      <span class="w-48 h-48 p-2rounded-full">
+        <img
+          src="https://chinet.org/wp-content/uploads/2018/12/logo-border.png"
+          alt="HandsOn Application Logo"
+          class="w-full h-full"
+        />
+      </span>
+    </div>
+    <div class="w-full">
+      <div class="max-w-xl ml-auto text-center sm:text-right">
+        <h1 class="title">
+          Welcome to <span class="primary">HandsOn Application</span>
+        </h1>
+
+        <p class="text mt-6">
+          This application is a initial setup for a hands on application. It is
+          a simple application that will be used to demonstrate the use of
+          technologies.
+        </p>
+      </div>
+    </div>
+  </main>
+</div>

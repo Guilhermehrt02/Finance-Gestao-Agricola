@@ -1,0 +1,5 @@
+::ng-deep .p-datatable .p-datatable-header,
+::ng-deep .p-datatable thead {
+  background-color: transparent;
+  border: 0;
+}
