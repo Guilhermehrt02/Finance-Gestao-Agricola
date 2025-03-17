@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -16,7 +16,7 @@ import {
   ButtonComponent,
   CheckboxComponent,
 } from '@farm/ui';
-import { AuthFacade } from '@farm/core';
+import { AuthFacade, APP_CONFIG } from '@farm/core';
 
 @Component({
   selector: 'lib-form',
@@ -35,6 +35,8 @@ import { AuthFacade } from '@farm/core';
   styleUrl: './form.component.css',
 })
 export class FormComponent implements OnInit {
+  private readonly appConfig = inject(APP_CONFIG);
+
   signInForm: FormGroup;
   loading = false;
   loadingGoogle = false;
@@ -74,8 +76,8 @@ export class FormComponent implements OnInit {
   onGoogleSignIn() {
     this.loadingGoogle = true;
 
-    const clientId = '';
-    const redirectUri = encodeURIComponent('');
+    const clientId = this.appConfig.clientId;
+    const redirectUri = encodeURIComponent(this.appConfig.redirectUri);
 
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid%20profile%20email&response_type=code&access_type=offline&prompt=consent`;
 

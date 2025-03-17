@@ -16,7 +16,7 @@ import { interceptorsProviders } from '@farm/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import Aura from '@primeng/themes/aura';
 import { TooltipModule } from 'primeng/tooltip';
-import { APP_CONFIG } from './environments/app-config.token';
+import { APP_CONFIG } from '@farm/core';
 import { environment } from './environments/environment';
 
 export const appConfig: ApplicationConfig = {
@@ -59,8 +59,8 @@ export const appConfig: ApplicationConfig = {
 export function jwtOptionsFactory() {
   return {
     tokenGetter: () => {
-      return 'uNNtAoquY3kUMt1BsvLcUqf51rovyv2e';
+      return environment.jwtToken;
     },
-    allowedDomains: ['http://localhost:5143'],
+    allowedDomains: environment.allowedDomains,
   };
 }
