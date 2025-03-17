@@ -1,6 +1,9 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './lib/interceptors/authentication/authentication.interceptor';
 
+// config
+export * from './lib/config/app-config.token';
+
 // models
 export * from './lib/models/environment.model';
 export * from './lib/models/token.model';
