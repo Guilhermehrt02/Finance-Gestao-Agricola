@@ -3,16 +3,16 @@ import { PrimeNG, ThemeType } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { definePreset } from '@primeng/themes';
 import { RouterModule } from '@angular/router';
-import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogComponent, ToastComponent } from '@farm/ui';
 
 @Component({
-  imports: [RouterModule, ToastModule],
+  imports: [RouterModule, ConfirmDialogComponent, ToastComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'HandsOn';
+  title = 'farm';
 
   constructor(private primeng: PrimeNG) {
     const themePreset: ThemeType = {
@@ -44,6 +44,19 @@ const preset = definePreset(Aura, {
       800: '{blue.800}',
       900: '{blue.900}',
       950: '{blue.950}',
+    },
+  },
+  components: {
+    menubar: {
+      background: '{transparent}',
+      border: {
+        color: '{transparent}',
+      },
+    },
+    drawer: {
+      content: {
+        padding: '0.5rem',
+      },
     },
   },
 });

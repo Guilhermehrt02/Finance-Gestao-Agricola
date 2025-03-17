@@ -1,8 +1,8 @@
 export default {
-  displayName: 'HandsOn',
+  displayName: 'farm',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: './coverage/HandsOn',
+  coverageDirectory: './coverage/farm',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

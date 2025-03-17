@@ -25,7 +25,9 @@ namespace Infrastructure.Persistence.Repositories
             foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
+
                 user.RoleName = roles.FirstOrDefault(r => userRoles.Contains(r.Name!))?.Name!;
+                user.StatusName = StatusExtension.ToFriendlyString(user.Status);
             }
 
             return users;
@@ -38,7 +40,9 @@ namespace Infrastructure.Persistence.Repositories
             if (user == null) return null;
 
             var roles = await _userManager.GetRolesAsync(user);
+
             user.RoleName = roles.FirstOrDefault()!;
+            user.StatusName = StatusExtension.ToFriendlyString(user.Status);
 
             return user;
         }
@@ -50,7 +54,24 @@ namespace Infrastructure.Persistence.Repositories
             if (user == null) return null;
 
             var roles = await _userManager.GetRolesAsync(user);
+
             user.RoleName = roles.FirstOrDefault()!;
+            user.StatusName = StatusExtension.ToFriendlyString(user.Status);
+
+            return user;
+        }
+
+        public async Task<User?> GetByPhoneAsync(string phoneNumber)
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var user = users.FirstOrDefault(u => u.PhoneNumber == phoneNumber);
+
+            if (user == null) return null;
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            user.RoleName = roles.FirstOrDefault()!;
+            user.StatusName = StatusExtension.ToFriendlyString(user.Status);
 
             return user;
         }
@@ -64,6 +85,7 @@ namespace Infrastructure.Persistence.Repositories
             await _userManager.AddToRoleAsync(user, role.Name!);
 
             user.RoleName = role.Name!;
+            user.StatusName = StatusExtension.ToFriendlyString(user.Status);
 
             return user;
         }
@@ -82,6 +104,7 @@ namespace Infrastructure.Persistence.Repositories
             }
 
             user.RoleName = role?.Name!;
+            user.StatusName = StatusExtension.ToFriendlyString(user.Status);
 
             return user;
         }
@@ -136,6 +159,18 @@ namespace Infrastructure.Persistence.Repositories
             if (!result.Succeeded) return null;
 
             return user;
+        }
+
+        public async Task<bool> CheckPasswordResetTokenAsync(User user, string token)
+        {
+            var isValid = await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.PasswordResetTokenProvider, "ResetPassword", token);
+            return isValid;
+        }
+
+        public async Task<bool> CheckEmailChangeTokenAsync(User user, string token)
+        {
+            var isValid = await _userManager.VerifyUserTokenAsync(user, _userManager.Options.Tokens.EmailConfirmationTokenProvider, "ChangeEmail", token);
+            return isValid;
         }
     }
 }

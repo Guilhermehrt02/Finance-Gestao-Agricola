@@ -60,6 +60,66 @@ namespace API.Controllers
         }
 
         /// <summary>
+        /// Check if the email is available
+        /// </summary>
+        /// <param name="email">Email</param>
+        /// <returns>True if the email is available</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckEmail([FromQuery] string email)
+        {
+            var isAvailable = await _usersServices.CheckEmailAsync(email);
+            return Ok(isAvailable);
+        }
+
+        /// <summary>
+        /// Check if the phone number is available
+        /// </summary>
+        /// <param name="phone">Phone number</param>
+        /// <returns>True if the phone number is available</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet("check-phone")]
+        public async Task<IActionResult> CheckPhone([FromQuery] string phone)
+        {
+            var isAvailable = await _usersServices.CheckPhoneAsync(phone);
+            return Ok(isAvailable);
+        }
+
+        /// <summary>
+        /// Check if the password reset token is valid
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="token">Token</param>
+        /// <returns>True if the token is valid</returns>
+        /// <response code="200">Success</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet("check-password-reset-token")]
+        public async Task<IActionResult> CheckPasswordResetToken([FromQuery] string key, [FromQuery] string token)
+        {
+            var isValid = await _usersServices.CheckPasswordResetTokenAsync(key, token);
+            return Ok(isValid);
+        }
+
+        /// <summary>
+        /// Register me
+        /// </summary>
+        /// <param name="inputModel">User input model</param>
+        /// <returns>Token</returns>
+        /// <response code="201">Created</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="409">Conflict</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterMeInputModel inputModel)
+        {
+            var token = await _usersServices.RegisterMeAsync(inputModel);
+            return Ok(token);
+        }
+
+        /// <summary>
         /// Register a new user
         /// </summary>
         /// <param name="inputModel">User input model</param>
@@ -69,6 +129,7 @@ namespace API.Controllers
         /// <response code="401">Unauthorized</response>
         /// <response code="409">Conflict</response>
         /// <response code="500">Internal Server Error</response>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RegisterUserInputModel inputModel)
         {

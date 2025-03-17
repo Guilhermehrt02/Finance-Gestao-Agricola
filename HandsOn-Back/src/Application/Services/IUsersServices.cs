@@ -9,7 +9,11 @@ namespace Application.Services
         Task<IEnumerable<UserViewModel>> GetAllAsync();
         Task<UserViewModel> GetByIdAsync(Guid id);
         Task<UserViewModel> GetMeAsync(ClaimsPrincipal actionUser);
+        Task<bool> CheckEmailAsync(string email);
+        Task<bool> CheckPhoneAsync(string phone);
+        Task<bool> CheckPasswordResetTokenAsync(string key, string token);
 
+        Task<TokenViewModel> RegisterMeAsync(RegisterMeInputModel inputModel);
         Task<UserViewModel> RegisterAsync(RegisterUserInputModel inputModel);
         Task<UserViewModel> UpdateAsync(Guid id, UpdateUserInputModel inputModel);
         Task<UserViewModel> UpdateMeAsync(UpdateMeInputModel inputModel, ClaimsPrincipal actionUser);

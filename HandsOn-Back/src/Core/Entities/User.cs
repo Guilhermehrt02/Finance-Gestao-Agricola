@@ -14,6 +14,8 @@ namespace Core.Entities
 
         [NotMapped]
         public string? RoleName { get; set; }
+        [NotMapped]
+        public string? StatusName { get; set; }
 
         public User() { }
 

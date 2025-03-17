@@ -42,11 +42,11 @@ namespace Infrastructure.Persistence.Context
 
             List<User> users =
             [
-                new User("John", "Doe", "example1@gmail.com", "+5535900000000"),
-                new User("Jane", "Doe", "example2@gmail.com", "+5535911111111"),
-                new User("Alice", "Anderson", "example3@gmail.com", "+5535922222222"),
-                new User("Bob", "Anderson", "example4@gmail.com", "+5535933333333"),
-                new User("Charlie", "Smith", "example5@gmail.com", "+5535944444444")
+                new User("John", "Doe", "example1@gmail.com", "(99) 99999-9991"),
+                new User("Jane", "Doe", "example2@gmail.com", "(99) 99999-9992"),
+                new User("Alice", "Anderson", "example3@gmail.com", "(99) 99999-9993"),
+                new User("Bob", "Anderson", "example4@gmail.com", "(99) 99999-9994"),
+                new User("Charlie", "Smith", "example5@gmail.com", "(99) 99999-9995")
             ];
 
             foreach (var user in users)

@@ -38,7 +38,7 @@ export default [
     ],
     // Override or add rules here
     rules: {
-      //
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ];

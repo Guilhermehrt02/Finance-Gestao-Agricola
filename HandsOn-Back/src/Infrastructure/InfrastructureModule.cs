@@ -9,6 +9,7 @@ using System.Text;
 using Infrastructure.Persistence.Context;
 using Core.Repositories;
 using Infrastructure.Persistence.Repositories;
+using Infrastructure.Utils;
 
 namespace Infrastructure
 {
@@ -72,6 +73,8 @@ namespace Infrastructure
             .AddEntityFrameworkStores<UsersDbContext>()
             .AddDefaultTokenProviders();
 
+            services.AddScoped<IPasswordHasher<User>, BcryptPasswordHasherService<User>>();
+
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -97,15 +100,14 @@ namespace Infrastructure
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
-            });
-            // TODO: Add Google authentication
-            // .AddGoogle(options =>
-            // {
-            //     var configuration = services.BuildServiceProvider().GetService<IConfiguration>()!;
+            })
+            .AddGoogle(options =>
+            {
+                var configuration = services.BuildServiceProvider().GetService<IConfiguration>()!;
 
-            //     options.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID") ?? configuration!.GetSection("Google:ClientId").Value!;
-            //     options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET") ?? configuration.GetSection("Google:ClientSecret").Value!;
-            // });
+                options.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_ID") ?? configuration!.GetSection("Google:ClientId").Value!;
+                options.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET") ?? configuration.GetSection("Google:ClientSecret").Value!;
+            });
 
             return services;
         }
