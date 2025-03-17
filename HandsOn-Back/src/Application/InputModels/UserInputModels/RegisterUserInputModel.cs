@@ -16,11 +16,6 @@ namespace Application.InputModels.UserInputModels
         [MinLength(1, ErrorMessage = "Last name cannot be empty.")]
         public string? LastName { get; set; }
 
-        [Required(ErrorMessage = "Password is required.")]
-        [MaxLength(18, ErrorMessage = "Password cannot be longer than 18 characters.")]
-        [MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
-        public string? Password { get; set; }
-
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         [MaxLength(100, ErrorMessage = "Email cannot be longer than 100 characters.")]

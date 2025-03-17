@@ -13,7 +13,7 @@ namespace Application.ViewModels
         public string Role { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public UserStatus Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         public static UserViewModel FromEntity(User user)
         {
@@ -27,7 +27,7 @@ namespace Application.ViewModels
                 Role = user.RoleName!,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
-                Status = user.Status
+                Status = user.StatusName!
             };
         }
     }

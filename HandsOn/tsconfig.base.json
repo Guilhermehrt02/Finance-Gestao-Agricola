@@ -15,44 +15,37 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@hands-on/account": [
-        "lib/ui/pages/settings/src/lib/settings/lib/account/src/index.ts"
+      "@farm/account": [
+        "libs/feature/settings/src/lib/settings/account/src/index.ts"
       ],
-      "@hands-on/change-password": [
-        "lib/ui/pages/change-password/src/index.ts"
+      "@farm/change-password": ["libs/feature/change-password/src/index.ts"],
+      "@farm/core": ["libs/shared/core/src/index.ts"],
+      "@farm/dashboard": ["libs/feature/dashboard/src/index.ts"],
+      "@farm/environments": ["src/app/environments/app-config.token.ts"],
+      "@farm/footer": [
+        "libs/master-page/src/lib/master-page/footer/src/index.ts"
       ],
-      "@hands-on/facades": ["lib/core/facades/index.ts"],
-      "@hands-on/footer": [
-        "lib/ui/template/master-page/src/lib/master-page/lib/footer/src/index.ts"
+      "@farm/header": [
+        "libs/master-page/src/lib/master-page/header/src/index.ts"
       ],
-      "@hands-on/guards": ["lib/core/guards/index.ts"],
-      "@hands-on/header": [
-        "lib/ui/template/master-page/src/lib/master-page/lib/header/src/index.ts"
+      "@farm/home": ["libs/feature/home/src/index.ts"],
+      "@farm/main": ["libs/master-page/src/lib/master-page/main/src/index.ts"],
+      "@farm/master-page": ["libs/master-page/src/index.ts"],
+      "@farm/not-found": ["libs/feature/not-found/src/index.ts"],
+      "@farm/security": [
+        "libs/feature/settings/src/lib/settings/security/src/index.ts"
       ],
-      "@hands-on/home": ["lib/ui/pages/home/src/index.ts"],
-      "@hands-on/interceptors": ["lib/core/interceptors/index.ts"],
-      "@hands-on/main": [
-        "lib/ui/template/master-page/src/lib/master-page/lib/main/src/index.ts"
+      "@farm/settings": ["libs/feature/settings/src/index.ts"],
+      "@farm/sidebar": [
+        "libs/master-page/src/lib/master-page/sidebar/src/index.ts"
       ],
-      "@hands-on/master-page": ["lib/ui/template/master-page/src/index.ts"],
-      "@hands-on/models": ["lib/core/models/index.ts"],
-      "@hands-on/security": [
-        "lib/ui/pages/settings/src/lib/settings/lib/security/src/index.ts"
-      ],
-      "@hands-on/services": ["lib/core/services/index.ts"],
-      "@hands-on/settings": ["lib/ui/pages/settings/src/index.ts"],
-      "@hands-on/sidebar": [
-        "lib/ui/template/master-page/src/lib/master-page/lib/sidebar/sidebar/src/index.ts"
-      ],
-      "@hands-on/sign-in": ["lib/ui/pages/sign-in/src/index.ts"],
-      "@hands-on/sign-up": ["lib/ui/pages/sign-up/src/index.ts"],
-      "@hands-on/ui": ["lib/ui/shared/index.ts"],
-      "@hands-on/user": [
-        "lib/ui/pages/users/src/lib/users/lib/user/src/index.ts"
-      ],
-      "@hands-on/users": ["lib/ui/pages/users/src/index.ts"],
-      "@hands-on/users-list": [
-        "lib/ui/pages/users/src/lib/users/lib/users-list/src/index.ts"
+      "@farm/sign-in": ["libs/feature/sign-in/src/index.ts"],
+      "@farm/sign-up": ["libs/feature/sign-up/src/index.ts"],
+      "@farm/ui": ["libs/shared/ui/src/index.ts"],
+      "@farm/user": ["libs/feature/users/src/lib/users/user/src/index.ts"],
+      "@farm/users": ["libs/feature/users/src/index.ts"],
+      "@farm/users-list": [
+        "libs/feature/users/src/lib/users/users-list/src/index.ts"
       ]
     }
   },

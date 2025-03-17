@@ -34,8 +34,8 @@ namespace Infrastructure.Utils
         public static string Decrypt(string textToDecrypt, IConfiguration configuration)
         {
             var key =
-                Environment.GetEnvironmentVariable("GOOGLE_CLIENT_SECRET") ??
-                configuration["Google:ClientSecret"] ??
+                Environment.GetEnvironmentVariable("HASH_KEY") ??
+                configuration["Hash:Key"] ??
                 "H9FfKD9B4pBl5U5KefxPfWcdB8Z6Vc8JCHQ2IzOgQxI=";
 
             using Aes aesAlg = Aes.Create();

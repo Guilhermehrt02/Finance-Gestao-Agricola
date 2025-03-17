@@ -1,0 +1,37 @@
+<p-drawer
+  [visible]="menuVisible"
+  (visibleChange)="menuToggle($event)"
+  [styleClass]="'primary-background primary-border'"
+  [ariaCloseLabel]="'Fechar menu'"
+  [baseZIndex]="1000"
+  [position]="'left'"
+  [closable]="false"
+>
+  <ng-template #header>
+    <div class="w-full flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img
+          src="https://chinet.org/wp-content/uploads/2018/12/logo-border.png"
+          alt="logo"
+          class="w-12 h-12"
+        />
+        <p class="text">HandsOn</p>
+      </div>
+    </div>
+
+    <lib-button
+      [variant]="'text'"
+      [severity]="'secondary'"
+      [icon]="'pi pi-fw pi-times'"
+      [tooltip]="'Fechar menu'"
+      [size]="'large'"
+      (click)="menuToggle(false)"
+    ></lib-button>
+  </ng-template>
+
+  <ng-template #content>
+    <div class="w-full mt-4">
+      <p-menu [model]="menuItems" [styleClass]="'bg-transparent border-none'" />
+    </div>
+  </ng-template>
+</p-drawer>

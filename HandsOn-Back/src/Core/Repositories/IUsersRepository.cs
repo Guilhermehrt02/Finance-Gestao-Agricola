@@ -9,6 +9,7 @@ namespace Core.Repositories
         Task<IEnumerable<User>> GetAllAsync();
         Task<User?> GetByIdAsync(Guid id);
         Task<User?> GetByEmailAsync(string email);
+        Task<User?> GetByPhoneAsync(string phone);
 
         Task<User> AddAsync(User user, IdentityRole<Guid> role);
         Task<User> UpdateAsync(User user, IdentityRole<Guid>? role = null);
@@ -22,5 +23,8 @@ namespace Core.Repositories
 
         Task<User?> ChangeEmailAsync(User user, string newEmail, string token);
         Task<User?> ChangePasswordAsync(User user, string newPassword, string token);
+
+        Task<bool> CheckPasswordResetTokenAsync(User user, string token);
+        Task<bool> CheckEmailChangeTokenAsync(User user, string token);
     }
 }

@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Utils;
 using Microsoft.AspNetCore.Identity;
+using System.Web;
 
 namespace Application.Services
 {
@@ -36,6 +37,69 @@ namespace Application.Services
             return UserViewModel.FromEntity(user);
         }
 
+        public async Task<bool> CheckEmailAsync(string email)
+        {
+            var user = await _usersRepository.GetByEmailAsync(email);
+            return user != null;
+        }
+
+        public async Task<bool> CheckPhoneAsync(string phone)
+        {
+            var user = await _usersRepository.GetByPhoneAsync(phone);
+            return user != null;
+        }
+
+        public async Task<bool> CheckPasswordResetTokenAsync(string key, string token)
+        {
+            var userId = HashService.Decrypt(key, _configuration);
+
+            if (userId == null) return false;
+
+            var user = await _usersRepository.GetByIdAsync(Guid.Parse(userId));
+
+            if (user == null) return false;
+
+            var result = await _usersRepository.CheckPasswordResetTokenAsync(user, token);
+            return result;
+        }
+
+        public async Task<TokenViewModel> RegisterMeAsync(RegisterMeInputModel inputModel)
+        {
+            InputModelValidator.Validate(inputModel);
+
+            var userExists = await _usersRepository.GetByEmailAsync(inputModel.Email!);
+
+            if (userExists != null)
+                throw new ConflictException("User already exists!");
+
+            var generatedUserName = string.Concat(inputModel.Email!.Split('@')[0], Guid.NewGuid().ToString().AsSpan(0, 5));
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(inputModel.Password!);
+
+            var defaultRole = RoleExtension.ToRole("Owner");
+            var role = await _usersRepository.GetRoleByNameAsync(defaultRole) ?? throw new NotFoundException("Role not found");
+
+            var user = new User
+            {
+                FirstName = inputModel.FirstName!,
+                LastName = inputModel.LastName!,
+                Email = inputModel.Email!,
+                NormalizedEmail = inputModel.Email!.ToUpper(),
+                PhoneNumber = inputModel.PhoneNumber!,
+                UserName = generatedUserName,
+                NormalizedUserName = generatedUserName.ToUpper(),
+                SecurityStamp = Guid.NewGuid().ToString(),
+                PasswordHash = passwordHash,
+                Status = UserStatus.Active,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            };
+
+            await _usersRepository.AddAsync(user, role);
+            var token = JwtService.Generate(user, _configuration);
+
+            return new TokenViewModel(token);
+        }
+
         public async Task<UserViewModel> RegisterAsync(RegisterUserInputModel inputModel)
         {
             InputModelValidator.Validate(inputModel);
@@ -45,8 +109,9 @@ namespace Application.Services
             if (userExists != null)
                 throw new ConflictException("User already exists!");
 
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(inputModel.Password!);
             var generatedUserName = string.Concat(inputModel.Email!.Split('@')[0], Guid.NewGuid().ToString().AsSpan(0, 5));
+            var generatedPassword = PasswordService.GenerateRandomPassword();
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(generatedPassword);
 
             var role = await _usersRepository.GetRoleByNameAsync(inputModel.Role) ?? throw new NotFoundException("Role not found");
 
@@ -58,8 +123,8 @@ namespace Application.Services
                 NormalizedEmail = inputModel.Email!.ToUpper(),
                 PhoneNumber = inputModel.PhoneNumber!,
                 UserName = generatedUserName,
+                PasswordHash = passwordHash,
                 NormalizedUserName = generatedUserName.ToUpper(),
-                PasswordHash = hashedPassword,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 Status = UserStatus.Active,
                 CreatedAt = DateTime.UtcNow,
@@ -67,6 +132,9 @@ namespace Application.Services
             };
 
             await _usersRepository.AddAsync(user, role);
+
+            // TODO: Send email with generatedPassword
+
             return UserViewModel.FromEntity(user);
         }
 
@@ -154,10 +222,11 @@ namespace Application.Services
             var user = await _usersRepository.GetByIdAsync(userId) ?? throw new NotFoundException("User not found");
 
             var token = await _usersRepository.GenerateEmailChangeTokenAsync(user, inputModel.Email!);
+            var tokenUrlEncoded = HttpUtility.UrlEncode(token);
 
-            Console.WriteLine(token);
+            Console.WriteLine(tokenUrlEncoded);
 
-            // TODO: Send email with token
+            // TODO: Send email with token (eg. frontend_url/change-email?token=tokenUrlEncoded)
         }
 
         public async Task SendPasswordResetTokenAsync(SendPasswordChangeTokenInputModel inputModel)
@@ -173,9 +242,12 @@ namespace Application.Services
             var token = await _usersRepository.GeneratePasswordChangeTokenAsync(user);
             var userIdEncrypted = HashService.Encrypt(userId, _configuration);
 
-            Console.WriteLine(token, userIdEncrypted);
+            var tokenUrlEncoded = HttpUtility.UrlEncode(token);
+            var userIdEncryptedUrlEncoded = HttpUtility.UrlEncode(userIdEncrypted);
 
-            // TODO: Send email with token and userIdEncrypted
+            Console.WriteLine(tokenUrlEncoded, userIdEncryptedUrlEncoded);
+
+            // TODO: Send email with token and userIdEncrypted (eg. frontend_url/change-password?token=tokenUrlEncoded&key=userIdEncryptedUrlEncoded)
         }
 
         public async Task<TokenViewModel> AuthenticateAsync(AuthenticateUserInputModel inputModel)

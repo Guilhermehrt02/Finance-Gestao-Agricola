@@ -1,13 +1,15 @@
-module.exports = {
+import PrimeUI from 'tailwindcss-primeui';
+
+export default {
+  content: [],
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [require('tailwindcss-primeui')],
+  plugins: [PrimeUI],
   content: [
     './src/**/*.{html,js,ts,jsx,tsx}',
-    './lib/**/*.{html,js,ts,jsx,tsx}',
+    './src/**/**/*.{html,js,ts,jsx,tsx}',
+    './libs/**/*.{html,js,ts,jsx,tsx}',
+    './libs/**/**/*.{html,js,ts,jsx,tsx}',
   ],
 };
