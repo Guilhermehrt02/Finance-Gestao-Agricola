@@ -23,7 +23,7 @@ Before starting, install the following dependencies on your system:
   ```sh
   dotnet tool install --global dotnet-ef
   ```
-- [MySQL](https://dev.mysql.com/downloads/installer/)
+- [MySQL](https://dev.mysql.com/downloads/mysql/) (**Tested with: v9.2**)
 - A SQL database management tool, such as:
   - [DBeaver](https://dbeaver.io/)
   - [HeidiSQL](https://www.heidisql.com/)
