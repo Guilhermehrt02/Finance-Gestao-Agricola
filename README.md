@@ -45,6 +45,16 @@ Before starting, install the following dependencies on your system:
 
 After installing all the requirements, follow the instructions to run the back-end and front-end.
 
+## 📥 Cloning the Repository
+
+To download the project, run the following command in the desired directory:
+
+```sh
+  git clone https://chinet@dev.azure.com/chinet/HandsOn/_git/HandsOn
+```
+
+🔹 **Important:** Make sure to execute this command in the folder where you want to store the code.
+
 ## 🏠 Back-End
 
 ### 1 - Configure Environment Variables
@@ -60,7 +70,7 @@ After installing all the requirements, follow the instructions to run the back-e
 - Edit the database connection details to match your MySQL credentials:
   ```json
   "ConnectionStrings": {
-    "DefaultConnection": "server=YOUR_SERVER;port=YOUR_SERVER_PORT;database=YOUR_DATABASE;user=YOUR_USER;password=YOUR_PASSWORD"
+    "DefaultConnection": "server=localhost;port=3306;database=handson;user=YOUR_USER;password=YOUR_PASSWORD"
   }
   ```
 - **Tip:** You can create a `appsettings.Development.json` file to avoid modifying the original file.
