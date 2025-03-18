@@ -37,7 +37,7 @@ steps:
   - task: CopyFiles@2
     inputs:
       SourceFolder: "$(buildDirectory)/dist/farm/browser"
-      TargetFolder: 'C:\\handson' # Path on the self-hosted Windows server
+      TargetFolder: 'C:\\handson\\html' # Path on the self-hosted Windows server
       Overwrite: true
     displayName: "Copy Build Files to Server"
 
