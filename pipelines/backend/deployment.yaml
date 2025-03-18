@@ -15,8 +15,7 @@ variables:
   dockerRegistry: "xitcloudinfracontainerregistry"
   dockerRepository: "hands-on-backend"
   dockerTag: "$(Build.BuildId)"
-  dockerRegistryServiceConnection: "10543f79-1d3e-4ba9-968e-259049b53fe1"
-  azureServiceConnection: "d7782063-6c6b-42bb-838e-45fc4935eeb8"
+  dockerRegistryServiceConnection: "6c1a086d-4b6d-4f67-a4ce-0556b5df49f8"
   baseDirectory: "HandsOn-Back"
   group: HandsOnSecrets
 

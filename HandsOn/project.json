@@ -23,7 +23,13 @@
           }
         ],
         "styles": ["./src/styles.css"],
-        "scripts": []
+        "scripts": [],
+        "fileReplacements": [
+          {
+            "replace": "src/app/environments/environment.json",
+            "with": "src/app/environments/environment.prod.json"
+          }
+        ]
       },
       "configurations": {
         "production": {
@@ -39,13 +45,7 @@
               "maximumError": "8kb"
             }
           ],
-          "outputHashing": "all",
-          "fileReplacements": [
-            {
-              "replace": "src/app/environments/environment.ts",
-              "with": "src/app/environments/environment.prod.ts"
-            }
-          ]
+          "outputHashing": "all"
         },
         "development": {
           "optimization": false,
