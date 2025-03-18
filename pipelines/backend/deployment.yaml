@@ -84,6 +84,6 @@ steps:
         # docker rm hands-on-backend
 
         # Run the new container with the latest image
-        docker run -d --restart=always --name hands-on-backend -p 6001:80 $(dockerRegistry).azurecr.io/$(dockerRepository):$(Build.BuildId)
+        docker run -d --restart=always --name hands-on-backend -p 6001:8080 $(dockerRegistry).azurecr.io/$(dockerRepository):$(Build.BuildId)
       pwsh: true
       displayName: "Deploy to Self-hosted Windows Server"
