@@ -36,7 +36,7 @@ steps:
   # Make sure to replace 'deployPath' and the commands with actual deployment steps
   - task: CopyFiles@2
     inputs:
-      SourceFolder: "$(buildDirectory)/dist/HandsOn/browser"
+      SourceFolder: "$(buildDirectory)/dist/farm/browser"
       TargetFolder: 'C:\\handson' # Path on the self-hosted Windows server
       Overwrite: true
     displayName: "Copy Build Files to Server"
