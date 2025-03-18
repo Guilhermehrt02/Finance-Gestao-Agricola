@@ -152,27 +152,24 @@ Swagger allows you to test endpoints and view API documentation interactively.
   ```
 - Locate the environment file:
   ```
-  HandsOn/src/app/environments/environment.prod.ts
+  HandsOn/src/app/environments/environment.prod.json
   ```
-- Copy and rename it to `environment.ts`:
+- Copy and rename it to `environment.json`:
   ```sh
-  cp HandsOn/src/app/environments/environment.prod.ts HandsOn/src/app/environments/environment.ts
+  cp HandsOn/src/app/environments/environment.prod.json HandsOn/src/app/environments/environment.json
   ```
-- Edit the `environment.ts` file and update the API URL to point to the back-end:
+- Edit the `environment.json` file and update the API URL to point to the back-end:
 
-  ```ts
-  export const environment = {
-    production: false,
-
-    clientId: "",
-    redirectUri: "",
-
-    jwtToken: "uNNtAoquY3kUMt1BsvLcUqf51rovyv2e",
-    allowedDomains: ["http://localhost:4200"],
-
-    authApiUrl: "http://localhost:5143/api/users",
-    usersApiUrl: "http://localhost:5143/api/users",
-  };
+  ```json
+  {
+    "production": false,
+    "clientId": "",
+    "redirectUri": "",
+    "jwtToken": "uNNtAoquY3kUMt1BsvLcUqf51rovyv2e",
+    "allowedDomains": ["http://localhost:4200"],
+    "authApiUrl": "http://localhost:5143/api/users",
+    "usersApiUrl": "http://localhost:5143/api/users"
+  }
   ```
 
 ### 2 - Install Dependencies

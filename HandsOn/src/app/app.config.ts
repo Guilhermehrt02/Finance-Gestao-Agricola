@@ -12,16 +12,15 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { provideTranslateService } from '@ngx-translate/core';
 import { translations } from './translations';
-import { interceptorsProviders } from '@farm/core';
+import { Environment, interceptorsProviders } from '@farm/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import Aura from '@primeng/themes/aura';
 import { TooltipModule } from 'primeng/tooltip';
 import { APP_CONFIG } from '@farm/core';
-import { environment } from './environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: APP_CONFIG, useValue: environment },
+    { provide: APP_CONFIG, useValue: environmentFactory() },
     provideAnimations(),
     provideAnimationsAsync(),
     provideRouter(appRoutes),
@@ -56,11 +55,31 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 
+function environmentFactory(): Environment {
+  let env: Environment = {
+    production: false,
+    jwtToken: '',
+    allowedDomains: [],
+    authApiUrl: '',
+    usersApiUrl: '',
+    clientId: '',
+    redirectUri: '',
+  };
+
+  try {
+    env = require('./environments/environment.json');
+  } catch {
+    env = require('./environments/environment.prod.json');
+  }
+
+  return env;
+}
+
 export function jwtOptionsFactory() {
   return {
     tokenGetter: () => {
-      return environment.jwtToken;
+      return environmentFactory().jwtToken;
     },
-    allowedDomains: environment.allowedDomains,
+    allowedDomains: environmentFactory().allowedDomains,
   };
 }
