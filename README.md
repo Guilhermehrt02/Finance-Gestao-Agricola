@@ -65,15 +65,36 @@ To download the project, run the following command in the desired directory:
   ```
 - Open the configuration file:
   ```
-  HandsOn-Back/src/API/appsettings.json
+  HandsOn-Back/src/API/appsettings.Development.json
   ```
 - Edit the database connection details to match your MySQL credentials:
   ```json
-  "ConnectionStrings": {
-    "DefaultConnection": "server=localhost;port=3306;database=handson;user=YOUR_USER;password=YOUR_PASSWORD"
+  {
+    "Logging": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft.AspNetCore": "Warning"
+      }
+    },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+      "DefaultConnection": "server=localhost;port=3306;database=handson;user=root;password=root"
+    },
+    "Jwt": {
+      "Key": "uNNtAoquY3kUMt1BsvLcUqf51rovyv2e",
+      "ExpirationInMinutes": 1440,
+      "Issuer": "http://localhost:4200",
+      "Audience": "http://localhost:4200"
+    },
+    "Google": {
+      "ClientId": "your-client-id",
+      "ClientSecret": "your-client-secret"
+    },
+    "Hash": {
+      "Key": "H9FfKD9B4pBl5U5KefxPfWcdB8Z6Vc8JCHQ2IzOgQxI="
+    }
   }
   ```
-- **Tip:** You can create a `appsettings.Development.json` file to avoid modifying the original file.
 
 ### 2 - Restore Dependencies
 
@@ -146,8 +167,8 @@ Swagger allows you to test endpoints and view API documentation interactively.
     clientId: "",
     redirectUri: "",
 
-    jwtToken: "jwt_token",
-    allowedDomains: ["http://localhost:5143"],
+    jwtToken: "uNNtAoquY3kUMt1BsvLcUqf51rovyv2e",
+    allowedDomains: ["http://localhost:4200"],
 
     authApiUrl: "http://localhost:5143/api/users",
     usersApiUrl: "http://localhost:5143/api/users",
@@ -171,3 +192,23 @@ npm run start
 ```
 
 👉 The front-end will be available at: `http://localhost:4200/`.
+
+## 🏆 Usage
+
+To use the application, go to the login page at `http://localhost:4200/sign-in` and use one of the users created during the database seeding process.
+
+- example1@gmail.com / test123 (Role: Admin)
+- example2@gmail.com / test123 (Role: Owner)
+- example3@gmail.com / test123 (Role: Consultant)
+- example4@gmail.com / test123 (Role: Manager)
+- example5@gmail.com / test123 (Role: Collaborator)
+
+## ⚠️ IMPORTANT
+
+When pushing changes to the repository, always use a separate branch for the task you are working on.
+
+```sh
+git checkout -b feat/task_123
+```
+
+Ensure you always update your local branch and check which branch you are modifying to avoid overwriting issues and code conflicts. When creating a **pull request**, request merging into the `develop` branch.
