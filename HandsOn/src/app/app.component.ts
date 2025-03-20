@@ -12,7 +12,7 @@ import { ConfirmDialogComponent, ToastComponent } from '@farm/ui';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'farm';
+  title = 'Gestão Agrícola';
 
   constructor(private primeng: PrimeNG) {
     const themePreset: ThemeType = {
