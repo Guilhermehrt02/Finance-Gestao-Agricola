@@ -4,22 +4,21 @@ namespace Core.Entities
     public class Expense
     {
         public Guid Id { get; set; } 
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public string Category { get; set; } = string.Empty;
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
         public User? User { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public string? PaymentMethod { get; set; }  
         public string? ReceiptUrl { get; set; }
 
         public Expense() { }
 
-        public Expense(string description, string category, decimal amount, DateTime date, Guid userId)
+        public Expense(string category, decimal amount, DateTime date, Guid userId)
         {
-            Description = description;
             Category = category;
             Amount = amount;
             Date = date;

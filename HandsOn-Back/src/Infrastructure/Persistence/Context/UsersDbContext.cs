@@ -74,8 +74,31 @@ namespace Infrastructure.Persistence.Context
             modelBuilder.Entity<Expense>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Description).IsRequired();
-                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.Category)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Amount)
+                    .IsRequired();
+
+                entity.Property(e => e.Date)
+                    .IsRequired();
+
+                entity.Property(e => e.PaymentMethod)
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ReceiptUrl)
+                    .HasMaxLength(500);
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
