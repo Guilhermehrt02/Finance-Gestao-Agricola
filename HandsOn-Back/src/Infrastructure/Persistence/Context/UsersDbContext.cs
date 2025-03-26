@@ -10,6 +10,8 @@ namespace Infrastructure.Persistence.Context
     {
         public DbSet<User> IdentityUsers { get; set; }
 
+        public DbSet<Expense> Expenses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -68,6 +70,13 @@ namespace Infrastructure.Persistence.Context
                     RoleId = roleIds[i]
                 });
             }
+
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Description).IsRequired();
+                entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
+            });
         }
     }
 }

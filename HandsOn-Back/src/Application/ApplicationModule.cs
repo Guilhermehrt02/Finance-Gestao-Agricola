@@ -17,6 +17,7 @@ namespace Application
             var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
             services.AddSingleton(configuration!);
             services.AddScoped<IUsersServices, UsersServices>();
+            services.AddScoped<IExpenseServices, ExpenseServices>();
             return services;
         }
     }

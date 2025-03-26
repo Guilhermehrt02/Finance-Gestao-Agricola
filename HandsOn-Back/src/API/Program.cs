@@ -78,13 +78,12 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/openapi/v1.json", "HandsOn API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "HandsOn API v1");
         options.RoutePrefix = string.Empty;
         options.DocumentTitle = "HandsOn API Documentation";
         options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
@@ -93,17 +92,18 @@ if (app.Environment.IsDevelopment())
         options.EnableDeepLinking();
         options.ShowExtensions();
         options.EnableValidator();
+        options.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
+        options.DefaultModelExpandDepth(2);
+        options.DefaultModelsExpandDepth(2);
     });
 }
 
 app.UseHttpsRedirection();
-
 app.UseRouting();
 
-app.UseCors();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseCors();
 app.MapControllers();
-
 app.Run();
