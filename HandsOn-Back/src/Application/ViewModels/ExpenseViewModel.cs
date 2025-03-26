@@ -5,13 +5,13 @@ namespace Application.ViewModels
     public class ExpenseViewModel
     {
         public Guid Id { get; set; } 
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public string Category { get; set; } = string.Empty;
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
         public User? User { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public string? PaymentMethod { get; set; }  
         public string? ReceiptUrl { get; set; }

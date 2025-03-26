@@ -10,14 +10,18 @@ namespace Infrastructure.Persistence.Repositories
     {
         private readonly UsersDbContext _context = context;
 
-        public async Task<IEnumerable<Expense>> GetAllAsync()
+        public async Task<IEnumerable<Expense>> GetAllByUserIdAsync(Guid userId)
         {
-            return await _context.Expenses.ToListAsync();
+            return await _context.Expenses
+                .Where(e => e.UserId == userId)
+                .ToListAsync();
         }
 
-        public async Task<Expense?> GetByIdAsync(Guid id)
+        public async Task<Expense?> GetByIdAsync(Guid userId, Guid expenseId)
         {
-            return await _context.Expenses.FindAsync(id);
+            return await _context.Expenses
+                .Where(e => e.Id == expenseId && e.UserId == userId) 
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Expense> AddAsync(Expense expense)

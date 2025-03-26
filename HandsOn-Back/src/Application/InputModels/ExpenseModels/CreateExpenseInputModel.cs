@@ -19,9 +19,6 @@ namespace Application.InputModels.ExpenseModels
         [Required(ErrorMessage = "Date is required.")]
         [CustomValidation(typeof(CreateExpenseInputModel), nameof(ValidateDate))]
         public DateTime Date { get; set; }
-
-        [Required(ErrorMessage = "User ID is required.")]
-        public Guid UserId { get; set; }
        
        [MaxLength(50, ErrorMessage = "Payment method cannot be longer than 50 characters.")]
         public string? PaymentMethod { get; set; }

@@ -23,7 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var expenses = await _expenseServices.GetAllAsync();
+            var expenses = await _expenseServices.GetAllByUserIdAsync(User);
             return Ok(expenses);
         }
 
@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var expense = await _expenseServices.GetByIdAsync(id);
+            var expense = await _expenseServices.GetByIdAsync(User, id);
             return Ok(expense);
         }
 
@@ -55,7 +55,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateExpenseInputModel inputModel)
         {
-            var expense = await _expenseServices.CreateAsync(inputModel);
+            var expense = await _expenseServices.CreateAsync(User, inputModel);
             return CreatedAtAction(nameof(GetById), new { id = expense.Id }, expense);
         }
 
@@ -74,7 +74,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateExpenseInputModel inputModel)
         {
-            var expense = await _expenseServices.UpdateAsync(id, inputModel);
+            var expense = await _expenseServices.UpdateAsync(User, id, inputModel);
             return Ok(expense);
         }
 
@@ -90,7 +90,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _expenseServices.DeleteAsync(id);
+            await _expenseServices.DeleteAsync(User, id);
             return NoContent();
         }
 

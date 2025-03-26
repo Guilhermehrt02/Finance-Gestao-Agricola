@@ -4,27 +4,36 @@ using Application.ViewModels;
 using Application.Exceptions;
 using Application.Validators;
 using Application.InputModels.ExpenseModels;
+using System.Security.Claims;
 
 namespace Application.Services
 {
-    public class ExpenseServices(IExpenseRepository expenseRepository): IExpenseServices
+    public class ExpenseServices(IExpenseRepository expenseRepository) : IExpenseServices
     {
         private readonly IExpenseRepository _expenseRepository = expenseRepository;
 
-        public async Task<IEnumerable<ExpenseViewModel>> GetAllAsync()
+        public async Task<IEnumerable<ExpenseViewModel>> GetAllByUserIdAsync(ClaimsPrincipal actionUser)
         {
-            var expenses = await _expenseRepository.GetAllAsync();
+            // Get the user id from the claims (token)
+            var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
+
+            var expenses = await _expenseRepository.GetAllByUserIdAsync(userId);
             return expenses.Select(ExpenseViewModel.FromEntity);
         }
 
-        public async Task<ExpenseViewModel> GetByIdAsync(Guid id)
+        public async Task<ExpenseViewModel> GetByIdAsync(ClaimsPrincipal actionUser, Guid id)
         {
-            var expense = await _expenseRepository.GetByIdAsync(id) ?? throw new NotFoundException("Expense not found");
+            // Get the user id from the claims (token)
+            var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
+
+            var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");
             return ExpenseViewModel.FromEntity(expense);
         }
 
-        public async Task<ExpenseViewModel> CreateAsync(CreateExpenseInputModel inputModel)
+        public async Task<ExpenseViewModel> CreateAsync(ClaimsPrincipal actionUser, CreateExpenseInputModel inputModel)
         {
+            var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
+
             InputModelValidator.Validate(inputModel);
             
             var expense = new Expense
@@ -33,7 +42,7 @@ namespace Application.Services
                 Category = inputModel.Category,
                 Amount = inputModel.Amount,
                 Date = inputModel.Date,
-                UserId = inputModel.UserId,
+                UserId = userId,
                 PaymentMethod = inputModel.PaymentMethod,
                 ReceiptUrl = inputModel.ReceiptUrl
             };
@@ -42,11 +51,13 @@ namespace Application.Services
             return ExpenseViewModel.FromEntity(expense);
         }
 
-        public async Task<ExpenseViewModel> UpdateAsync(Guid id, UpdateExpenseInputModel inputModel)
+        public async Task<ExpenseViewModel> UpdateAsync(ClaimsPrincipal actionUser, Guid id, UpdateExpenseInputModel inputModel)
         {
             InputModelValidator.Validate(inputModel);
             
-            var expense = await _expenseRepository.GetByIdAsync(id) ?? throw new NotFoundException("Expense not found");
+            var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
+
+            var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");
 
             expense.Update(
                 inputModel.Description,
@@ -61,9 +72,11 @@ namespace Application.Services
             return ExpenseViewModel.FromEntity(expense);
         }
 
-        public async Task<ExpenseViewModel> DeleteAsync(Guid id)
+        public async Task<ExpenseViewModel> DeleteAsync(ClaimsPrincipal actionUser, Guid id)
         {
-            var expense = await _expenseRepository.GetByIdAsync(id) ?? throw new NotFoundException("Expense not found");
+            var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
+
+            var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");
             
             await _expenseRepository.DeleteAsync(expense);
             

@@ -22,11 +22,14 @@ namespace Application.InputModels.ExpenseModels
         [MaxLength(500, ErrorMessage = "Receipt URL cannot be longer than 500 characters.")]
         public string? ReceiptUrl { get; set; }
 
-        public static ValidationResult? ValidateDate(DateTime date, ValidationContext context)
+        public static ValidationResult? ValidateDate(DateTime? date, ValidationContext context)
         {
-            if (date > DateTime.Now)
+            if (date.HasValue) 
             {
-                return new ValidationResult("Date cannot be in the future.");
+                if (date.Value > DateTime.Now)
+                {
+                    return new ValidationResult("Date cannot be in the future.");
+                }
             }
             return ValidationResult.Success;
         }
