@@ -93,12 +93,6 @@ namespace Infrastructure.Persistence.Context
 
                 entity.Property(e => e.ReceiptUrl)
                     .HasMaxLength(500);
-
-                entity.HasOne(e => e.User)
-                    .WithMany()
-                    .HasForeignKey(e => e.UserId)
-                    .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

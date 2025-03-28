@@ -1,4 +1,5 @@
 using Core.Entities;
+using Core.Enums;
 
 namespace Application.ViewModels
 {
@@ -6,14 +7,13 @@ namespace Application.ViewModels
     {
         public Guid Id { get; set; } 
         public string? Description { get; set; }
-        public string Category { get; set; } = string.Empty;
+        public Category Category { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
-        public User? User { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public string? PaymentMethod { get; set; }  
+        public PaymentMethod? PaymentMethod { get; set; }  
         public string? ReceiptUrl { get; set; }
 
         public static ExpenseViewModel FromEntity(Expense expense)
@@ -26,7 +26,6 @@ namespace Application.ViewModels
                 Amount = expense.Amount,
                 Date = expense.Date,
                 UserId = expense.UserId,
-                User = expense.User,
                 CreatedAt = expense.CreatedAt,
                 UpdatedAt = expense.UpdatedAt,
                 PaymentMethod = expense.PaymentMethod,

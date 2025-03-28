@@ -5,6 +5,7 @@ using Application.Exceptions;
 using Application.Validators;
 using Application.InputModels.ExpenseModels;
 using System.Security.Claims;
+using Core.Enums;
 
 namespace Application.Services
 {
@@ -39,11 +40,11 @@ namespace Application.Services
             var expense = new Expense
             {
                 Description = inputModel.Description,
-                Category = inputModel.Category,
+                Category = CategoryExtension.ToCategory(inputModel.Category),
                 Amount = inputModel.Amount,
                 Date = inputModel.Date,
                 UserId = userId,
-                PaymentMethod = inputModel.PaymentMethod,
+                PaymentMethod = PaymentMethodExtension.ToPaymentMethod(inputModel.PaymentMethod ?? string.Empty),
                 ReceiptUrl = inputModel.ReceiptUrl
             };
 

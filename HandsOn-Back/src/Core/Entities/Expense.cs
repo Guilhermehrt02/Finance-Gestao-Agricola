@@ -1,25 +1,26 @@
 
+using Core.Enums;
+
 namespace Core.Entities
 {
     public class Expense
     {
         public Guid Id { get; set; } 
         public string? Description { get; set; }
-        public string Category { get; set; } = string.Empty;
+        public Category Category { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
-        public User? User { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public string? PaymentMethod { get; set; }  
+        public PaymentMethod? PaymentMethod { get; set; }  
         public string? ReceiptUrl { get; set; }
 
         public Expense() { }
 
         public Expense(string category, decimal amount, DateTime date, Guid userId)
         {
-            Category = category;
+            Category = CategoryExtension.ToCategory(category);
             Amount = amount;
             Date = date;
             UserId = userId;
@@ -36,10 +37,10 @@ namespace Core.Entities
         )
         {
             Description = description ?? Description;
-            Category = category ?? Category;
+            Category = CategoryExtension.ToCategory(category ?? Category.ToFriendlyString());
             Amount = amount ?? Amount;
             Date = date ?? Date;
-            PaymentMethod = paymentMethod ?? PaymentMethod;
+            PaymentMethod = PaymentMethodExtension.ToPaymentMethod(paymentMethod ?? PaymentMethod?.ToFriendlyString() ?? string.Empty);
             ReceiptUrl = receiptUrl ?? ReceiptUrl;
 
             UpdatedAt = DateTime.Now;
