@@ -12,6 +12,8 @@ namespace Infrastructure.Persistence.Context
 
         public DbSet<Expense> Expenses { get; set; }
 
+        public DbSet<Revenue> Revenues { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -90,6 +92,27 @@ namespace Infrastructure.Persistence.Context
 
                 entity.Property(e => e.PaymentMethod)
                     .HasMaxLength(50);
+
+                entity.Property(e => e.ReceiptUrl)
+                    .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<Revenue>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.Source)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Amount)
+                    .IsRequired();
+
+                entity.Property(e => e.Date)
+                    .IsRequired();
 
                 entity.Property(e => e.ReceiptUrl)
                     .HasMaxLength(500);

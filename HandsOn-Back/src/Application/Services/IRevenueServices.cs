@@ -1,13 +1,14 @@
-// using Application.ViewModels;
+using Application.ViewModels;
+using System.Security.Claims;
 
-// namespace Application.Services
-// {
-//     public interface IRevenueServices
-//     {
-//         Task<IEnumerable<RevenueViewModel>> GetAllAsync();
-//         Task<RevenueViewModel> GetByIdAsync(Guid id);
-//         Task<RevenueViewModel> CreateAsync(CreateRevenueInputModel inputModel);
-//         Task<RevenueViewModel> UpdateAsync(Guid id, UpdateRevenueInputModel inputModel);
-//         Task<RevenueViewModel> DeleteAsync(Guid id);
-//     }
-// }
+namespace Application.Services
+{
+    public interface IRevenueServices
+    {
+        Task<IEnumerable<RevenueViewModel>> GetAllByUserIdAsync(ClaimsPrincipal actionUser);
+        Task<RevenueViewModel> GetByIdAsync(ClaimsPrincipal actionUser, Guid id);
+        Task<RevenueViewModel> CreateAsync(ClaimsPrincipal actionUser, CreateRevenueInputModel inputModel);
+        Task<RevenueViewModel> UpdateAsync(ClaimsPrincipal actionUser, Guid id, UpdateRevenueInputModel inputModel);
+        Task<RevenueViewModel> DeleteAsync(ClaimsPrincipal actionUser, Guid id);
+    }
+}

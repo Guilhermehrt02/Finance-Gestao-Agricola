@@ -19,6 +19,7 @@ namespace Application.Services
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
 
             var expenses = await _expenseRepository.GetAllByUserIdAsync(userId);
+            
             return expenses.Select(ExpenseViewModel.FromEntity);
         }
 
