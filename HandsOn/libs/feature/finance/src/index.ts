@@ -1,2 +1,3 @@
-export * from './lib/finance.module';
 export * from './lib/lib.routes';
+
+export * from './lib/finance/finance.component';
