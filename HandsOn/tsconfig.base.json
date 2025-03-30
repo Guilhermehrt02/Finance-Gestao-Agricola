@@ -22,6 +22,7 @@
       "@farm/core": ["libs/shared/core/src/index.ts"],
       "@farm/dashboard": ["libs/feature/dashboard/src/index.ts"],
       "@farm/environments": ["src/app/environments/app-config.token.ts"],
+      "@farm/finance": ["libs/feature/finance/src/index.ts"],
       "@farm/footer": [
         "libs/master-page/src/lib/master-page/footer/src/index.ts"
       ],
