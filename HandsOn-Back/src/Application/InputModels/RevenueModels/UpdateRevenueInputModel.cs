@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.InputModels.ExpenseModels
+namespace Application.InputModels.RevenueModels
 {
     public class UpdateRevenueInputModel
     {
@@ -13,11 +13,8 @@ namespace Application.InputModels.ExpenseModels
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0.")]
         public decimal? Amount { get; set; }
 
-        [CustomValidation(typeof(UpdateExpenseInputModel), nameof(ValidateDate))]
+        [CustomValidation(typeof(UpdateRevenueInputModel), nameof(ValidateDate))]
         public DateTime? Date { get; set; }
-
-        [MaxLength(50, ErrorMessage = "Payment method cannot be longer than 50 characters.")]
-        public string? PaymentMethod { get; set; }
 
         [MaxLength(500, ErrorMessage = "Receipt URL cannot be longer than 500 characters.")]
         public string? ReceiptUrl { get; set; }

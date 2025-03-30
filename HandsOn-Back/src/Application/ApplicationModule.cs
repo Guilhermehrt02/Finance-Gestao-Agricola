@@ -18,6 +18,7 @@ namespace Application
             services.AddSingleton(configuration!);
             services.AddScoped<IUsersServices, UsersServices>();
             services.AddScoped<IExpenseServices, ExpenseServices>();
+            services.AddScoped<IRevenueServices, RevenueServices>();
             return services;
         }
     }

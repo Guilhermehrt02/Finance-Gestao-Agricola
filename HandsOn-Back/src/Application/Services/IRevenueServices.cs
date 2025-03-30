@@ -1,5 +1,6 @@
 using Application.ViewModels;
 using System.Security.Claims;
+using Application.InputModels.RevenueModels;
 
 namespace Application.Services
 {

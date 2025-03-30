@@ -3,7 +3,7 @@ using Core.Repositories;
 using Application.ViewModels;
 using Application.Exceptions;
 using Application.Validators;
-using Application.InputModels.ExpenseModels;
+using Application.InputModels.RevenueModels;
 using System.Security.Claims;
 using Core.Enums;
 

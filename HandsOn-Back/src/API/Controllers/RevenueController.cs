@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Application.InputModels.RevenueModels;
 
 namespace API.Controllers
 {
