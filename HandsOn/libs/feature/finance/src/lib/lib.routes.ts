@@ -1,6 +1,16 @@
 import { Route } from '@angular/router';
-import { FinanceComponent } from './finance/finance.component';
 
 export const financeRoutes: Route[] = [
-  { path: '', component: FinanceComponent },
+  { 
+    path: '',
+    loadComponent: () =>
+    import('./finance/finance.component').then((m) => m.FinanceComponent),
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('@farm/expenses-list').then((m) => m.expensesListRoutes),
+      }
+    ],
+  },
 ];

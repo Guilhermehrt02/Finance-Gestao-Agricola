@@ -12,4 +12,5 @@ export interface Environment {
   // API URLs
   authApiUrl: string;
   usersApiUrl: string;
+  apiUrl: string;
 }

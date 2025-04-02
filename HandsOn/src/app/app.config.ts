@@ -64,6 +64,7 @@ function environmentFactory(): Environment {
     usersApiUrl: '',
     clientId: '',
     redirectUri: '',
+    apiUrl: '',
   };
 
   try {
@@ -71,7 +72,7 @@ function environmentFactory(): Environment {
   } catch {
     env = require('./environments/environment.prod.json');
   }
-
+  // env = require('./environments/environment.json');
   return env;
 }
 

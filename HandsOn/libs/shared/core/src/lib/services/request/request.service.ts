@@ -15,14 +15,18 @@ export class RequestService {
 
   authApiUrl = '';
   usersApiUrl = '';
+  apiUrl = '';
 
+  
   public constructor(
     public httpClient: HttpClient,
     public router: Router,
     public jwtHelper: JwtHelperService,
   ) {
+    
     this.authApiUrl = this.appConfig.authApiUrl;
     this.usersApiUrl = this.appConfig.usersApiUrl;
+    this.apiUrl = this.appConfig.apiUrl;
   }
 
   public httpOptions: {
@@ -49,9 +53,9 @@ export class RequestService {
       errorMessage.message = error.error.message;
     } else {
       errorMessage.message = error.message;
-      errorMessage.errors = error.error.errors;
+      errorMessage.errors = error.error?.errors ?? [];
     }
 
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
 }

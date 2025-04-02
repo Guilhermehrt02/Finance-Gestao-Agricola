@@ -50,6 +50,12 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   loadMenu(userRole: string) {
     const menuItems: MenuItem[] = [];
+    
+    menuItems.push({
+      label: 'finance',
+      icon: 'pi pi-fw pi-money-bill',
+      routerLink: '/app/finance',
+    });
 
     if (userRole === 'Admin') {
       menuItems.push({
