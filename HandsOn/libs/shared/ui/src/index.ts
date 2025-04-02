@@ -17,3 +17,4 @@ export * from './lib/components/toast/toast.component';
 
 // Modules
 export * from './lib/modules/user-form/user-form.component';
+export * from './lib/modules/expense-form/expense-form.component';

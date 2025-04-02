@@ -1,0 +1,84 @@
+<form
+  [formGroup]="expenseForm"
+  (ngSubmit)="onSubmit()"
+  class="w-full flex flex-col gap-2 mt-6"
+>
+  <div class="w-full max-w-md mx-auto flex flex-col gap-2">
+    <lib-input
+      [id]="'description'"
+      [label]="'Descrição'"
+      [type]="'text'"
+      [placeholder]="'ex. Compra de materiais'"
+      [fluid]="true"
+      [maxlength]="300"
+      [control]="description"
+      class="w-full"
+    ></lib-input>
+
+    <lib-select
+      [id]="'category'"
+      [label]="'Categoria'"
+      [placeholder]="'Selecione uma categoria'"
+      [required]="true"
+      [fluid]="true"
+      [control]="category"
+      [options]="categoryOptions"
+      [filter]="true"
+      class="w-full"
+    ></lib-select>
+
+    <lib-input
+      [id]="'amount'"
+      [label]="'Valor'"
+      [type]="'text'"
+      [placeholder]="'ex. 100.00'"
+      [required]="true"
+      [fluid]="true"
+      [min]="0.01"
+      [control]="amount"
+      class="w-full"
+    ></lib-input>
+
+    <div class="form-group w-full">
+      <label for="date" class="block text-sm font-medium text-gray-700">Data</label>
+      <input
+        id="date"
+        type="date"
+        formControlName="date"
+        required
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+    </div>
+
+    <lib-select
+      [id]="'paymentMethod'"
+      [label]="'Forma de Pagamento'"
+      [placeholder]="'Selecione um método'"
+      [fluid]="true"
+      [control]="paymentMethod"
+      [options]="paymentMethods"
+      [filter]="true"
+      class="w-full"
+    ></lib-select>
+
+    <lib-input
+      [id]="'receiptUrl'"
+      [label]="'Comprovante (URL)'"
+      [type]="'text'"
+      [placeholder]="'ex. https://meus-comprovantes.com/123'"
+      [fluid]="true"
+      [maxlength]="500"
+      [control]="receiptUrl"
+      class="w-full"
+    ></lib-input>
+  </div>
+
+  <lib-button
+    class="w-full max-w-96 mt-6 mx-auto"
+    [label]="submitLabel"
+    [type]="'submit'"
+    [fluid]="true"
+    [severity]="'primary'"
+    [loading]="loading"
+  ></lib-button>
+</form>
