@@ -25,6 +25,15 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get('id') || undefined;
+    if (!this.id) {
+      return;
+    }
+    this.title = 'Editar Despesa';
+    this.description = 'Preencha os campos abaixo para editar a despesa';
+    this.submitLabel = 'Editar';
+
+    this.facade.load(this.id);
 
     this.facade.expense$.subscribe((expense) => {
       if (!expense) return;

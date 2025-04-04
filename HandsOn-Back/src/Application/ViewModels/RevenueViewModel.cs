@@ -7,7 +7,7 @@ namespace Application.ViewModels
     {
         public Guid Id { get; set; } 
         public string? Description { get; set; }
-        public Source Source { get; set; }
+        public string Source { get; set; } = string.Empty;
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public Guid UserId { get; set; }
@@ -21,7 +21,7 @@ namespace Application.ViewModels
             {
                 Id = revenue.Id,
                 Description = revenue.Description,
-                Source = revenue.Source,
+                Source = revenue.Source.ToFriendlyString(),
                 Amount = revenue.Amount,
                 Date = revenue.Date,
                 UserId = revenue.UserId,

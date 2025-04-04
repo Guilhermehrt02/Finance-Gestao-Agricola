@@ -98,12 +98,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseCors();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors();
 app.MapControllers();
 app.Run();

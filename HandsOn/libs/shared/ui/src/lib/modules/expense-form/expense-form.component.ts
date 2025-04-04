@@ -66,20 +66,26 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
 
   constructor() {
     this.expenseForm = new FormGroup({
-      id: new FormControl(''),
-      description: new FormControl('', [Validators.maxLength(300)]),
-      category: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(50),
-      ]),
-      amount: new FormControl('', [
-        Validators.required,
-        Validators.min(0.01),
-      ]),
-      date: new FormControl('', Validators.required),
-      paymentMethod: new FormControl(''),
-      receiptUrl: new FormControl('', Validators.maxLength(500)),
+      id: new FormControl('', { validators: [], updateOn: 'blur' }),
+      description: new FormControl('', { validators: [Validators.maxLength(300)], updateOn: 'blur' }),
+      category: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(50),
+        ],
+        updateOn: 'blur',     
+      }),
+      amount: new FormControl('', { 
+        validators: [
+          Validators.required,
+          Validators.min(0.01),
+        ],
+        updateOn: 'blur',
+      }),
+      date: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
+      paymentMethod: new FormControl('', { validators: [], updateOn: 'blur' }),
+      receiptUrl: new FormControl('', { validators: [Validators.maxLength(500)], updateOn: 'blur' }),
     });
   }
 
@@ -125,12 +131,12 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
     if (!this.expense) return;
 
     this.expenseForm.patchValue({
-      description: this.expense.description,
-      category: this.expense.category,
-      amount: this.expense.amount,
-      date: this.expense.date,
-      paymentMethod: this.expense.paymentMethod,
-      receiptUrl: this.expense.receiptUrl,
+      description: this.expense.description ?? '',
+      category: this.expense.category ?? '',
+      amount: this.expense.amount ?? 0,
+      date: this.expense.date ?? '',
+      paymentMethod: this.expense.paymentMethod ?? '',
+      receiptUrl: this.expense.receiptUrl ?? '',
     });
   }
 
@@ -142,10 +148,10 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
     const expense: Expense = {
       id: this.expense?.id || '',
       description: this.description.value,
-      category: this.category.value,
+      category: this.category.value.value,
       amount: this.amount.value,
       date: this.date.value,
-      paymentMethod: this.paymentMethod.value,
+      paymentMethod: this.paymentMethod.value.value,
       receiptUrl: this.receiptUrl.value,
       userId: this.expense?.userId || '', 
       createdAt: this.expense?.createdAt || new Date(), 

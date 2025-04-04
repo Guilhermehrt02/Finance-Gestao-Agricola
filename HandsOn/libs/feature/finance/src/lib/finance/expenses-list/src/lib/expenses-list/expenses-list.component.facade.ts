@@ -58,25 +58,27 @@ export class ExpensesListComponentFacade {
                     tooltip: 'Editar',
                     icon: 'pi pi-fw pi-pencil',
                     iconClass: 'primary',
-                    routerLink: `/app/finance/${expense.id}`,
+                    routerLink: `/app/finance/expenses/${expense.id}`,
                 },
                 {
-                        tooltip: 'Excluir',
-                        icon: 'pi pi-fw pi-trash',
-                        iconClass: 'danger',
-                        action: () => {
-                            this.confirmationService.confirm({
-                                message: 'Você tem certeza que deseja excluir esta despesa?',
-                                accept: () => {
-                                    this.expenseFacade.deleteExpense(expense.id).subscribe(() => {
-                                        this.expensesSubject.next(
-                                            this.expensesSubject.value.filter((e) => e['id'] !== expense.id),
-                                        );
-                                    });
-                                },
-                            });
-                        },
-                    }
+                    tooltip: 'Excluir',
+                    icon: 'pi pi-fw pi-trash',
+                    iconClass: 'danger',
+                    action: () => {
+                        console.log('Botão de excluir clicado!', expense.id); 
+                        
+                        this.confirmationService.confirm({
+                            message: 'Você tem certeza que deseja excluir esta despesa?',
+                            accept: () => {
+                                this.expenseFacade.deleteExpense(expense.id).subscribe(() => {
+                                    this.expensesSubject.next(
+                                        this.expensesSubject.value.filter((e) => e['id'] !== expense.id),
+                                    );
+                                });
+                            },
+                        });
+                    },
+                }
             ] as Action[],
         };
     }

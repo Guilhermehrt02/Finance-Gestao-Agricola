@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [     
     
+    
         {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
@@ -15,8 +16,7 @@
             "cwd": "${workspaceFolder}/HandsOn-Back/src/API",
             "stopAtEntry": false,
             "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+                "action": "openExternally"
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
