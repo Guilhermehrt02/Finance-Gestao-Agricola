@@ -6,6 +6,7 @@ import {
   ExpenseFacade,
   AuthFacade
 } from '@farm/core';
+import { Router } from '@angular/router';
 import { Row, Action } from '@farm/ui';
 
 @Injectable({
@@ -23,6 +24,7 @@ export class ExpensesListComponentFacade {
         private expenseFacade: ExpenseFacade,
         private authFacade: AuthFacade,
         private confirmationService: ConfirmationService,
+        private router: Router,
     ) {}
 
     load() {
@@ -64,7 +66,7 @@ export class ExpensesListComponentFacade {
                     tooltip: 'Excluir',
                     icon: 'pi pi-fw pi-trash',
                     iconClass: 'danger',
-                    command: (data) => {
+                    command: () => {
                         this.confirmationService.confirm({
                             header: "Excluir Despesa",
                             message: 'Você tem certeza que deseja excluir esta despesa?',
@@ -75,21 +77,12 @@ export class ExpensesListComponentFacade {
                             },
                         });
                     },
-                    // action: () => {
-                        
-                    //     this.confirmationService.confirm({
-                    //         message: 'Você tem certeza que deseja excluir esta despesa?',
-                    //         accept: () => {
-                    //             this.expenseFacade.deleteExpense(expense.id).subscribe(() => {
-                    //                 this.expensesSubject.next(
-                    //                     this.expensesSubject.value.filter((e) => e['id'] !== expense.id),
-                    //                 );
-                    //             });
-                    //         },
-                    //     });
-                    // },
                 }
             ] as Action[],
         };
+    }
+
+    navegateToCreateExpense(): void {
+        this.router.navigate(['/app/finance/expenses/create']);
     }
 }

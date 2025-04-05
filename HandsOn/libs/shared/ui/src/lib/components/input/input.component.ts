@@ -40,7 +40,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() floatLabel = false;
   @Input() floatLabelType: 'in' | 'over' | 'on' = 'in';
-  @Input() type: 'text' | 'email' | 'search' = 'text';
+  @Input() type: 'text' | 'email' | 'search' | 'number' | 'date' = 'text';
   @Input() control: FormControl = new FormControl();
   @Input() placeholder = '';
   @Input() disabled = false;
@@ -61,6 +61,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() min = 0;
   @Input() max = 0;
   @Input() loading = false;
+  @Input() step: number | null = null;
 
   onChange: any = () => undefined;
   onTouch: any = () => undefined;
@@ -86,7 +87,12 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   onInput(event: any): void {
-    this.onChange(event.target.value);
+    let value = event.target.value;
+    
+    if (this.type === 'number') {
+      value = value ? parseFloat(value) : null;
+    }
+    this.onChange(value);
   }
 
   onBlur(): void {
@@ -128,4 +134,5 @@ const errorMessages = {
   minlength: '{0} deve ter no mínimo {min} caracteres',
   maxlength: '{0} deve ter no máximo {max} caracteres',
   phoneExists: 'Telefone já cadastrado',
+  futureDate: '{0} não pode ser uma data futura',
 };

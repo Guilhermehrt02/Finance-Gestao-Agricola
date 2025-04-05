@@ -13,6 +13,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button.component';
 import { InputComponent } from '../../components/input/input.component';
@@ -22,7 +23,6 @@ import {
 } from '../../components/select/select.component';
 import {
   Expense,
-  ExpenseFacade
 } from '@farm/core';
 
 @Component({
@@ -83,7 +83,13 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
         ],
         updateOn: 'blur',
       }),
-      date: new FormControl('', { validators: [Validators.required], updateOn: 'blur' }),
+      date: new FormControl('', { 
+        validators: [
+          Validators.required, 
+          this.dateNotInFutureValidator()
+        ], 
+        updateOn: 'blur' 
+      }),
       paymentMethod: new FormControl('', { validators: [], updateOn: 'blur' }),
       receiptUrl: new FormControl('', { validators: [Validators.maxLength(500)], updateOn: 'blur' }),
     });
@@ -129,13 +135,23 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
 
   updateExpenseData(): void {
     if (!this.expense) return;
+  
+    const selectedCategory = this.categoryOptions.find(
+      (option) => this.expense && option.value === this.expense.category
+    );
+  
+    const selectedPaymentMethod = this.paymentMethods.find(
+      (option) => option.value === this.expense?.paymentMethod
+    );
+    
+    const formattedDate = this.formatDateToInput(this.expense.date);
 
     this.expenseForm.patchValue({
       description: this.expense.description ?? '',
-      category: this.expense.category ?? '',
+      category: selectedCategory ?? '',
       amount: this.expense.amount ?? 0,
-      date: this.expense.date ?? '',
-      paymentMethod: this.expense.paymentMethod ?? '',
+      date: formattedDate,
+      paymentMethod: selectedPaymentMethod ?? '',
       receiptUrl: this.expense.receiptUrl ?? '',
     });
   }
@@ -160,4 +176,41 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
 
     this.expenseSubmit.emit(expense);
   }
+
+  getAmountErrorMessage(): string {
+    if (this.amount.hasError('required')) {
+      return 'Valor é obrigatório.';
+    }
+    if (this.amount.hasError('min')) {
+      return 'Valor deve ser maior que 0.';
+    }
+    return '';
+  }
+  
+  getDateErrorMessage(): string {
+    if (this.date.hasError('required')) {
+      return 'Data é obrigatória.';
+    }
+    return '';
+  }
+
+  dateNotInFutureValidator() {
+    return (control: AbstractControl) => {
+      const today = new Date();
+      const value = new Date(control.value);
+      if (value > today) {
+        return { futureDate: true };
+      }
+      return null;
+    };
+  }
+  
+  private formatDateToInput(date: string | Date): string {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
 }

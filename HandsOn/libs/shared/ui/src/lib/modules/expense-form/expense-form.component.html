@@ -27,31 +27,25 @@
       class="w-full"
     ></lib-select>
 
-    <div class="form-group w-full">
-      <label for="amount" class="block text-sm font- text-gray-250">Valor</label>
-      <input
-        id="amount"
-        type="number"
-        formControlName="amount"
-        placeholder="ex. 100.00"
-        required
-        min="0.01"
-        class="mt-1 block w-full rounded-md border border-gray-600 shadow-sm 
-        focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2"
-      />
-    </div>
+    <lib-input
+      [id]="'amount'"
+      [label]="'Valor'"
+      [placeholder]="'ex. 100.00'"
+      [type]="'number'"
+      [control]="amount"
+      [min]="0.01"
+      [step]="0.01"
+      class="w-full"
+    />
 
-    <div class="form-group w-full">
-      <label for="date" class="block text-sm font-medium text-gray-250">Data</label>
-      <input
-        id="date"
-        type="date"
-        formControlName="date"
-        required
-        class="mt-1 block w-full rounded-md border border-gray-600 shadow-sm 
-        focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-3 py-2"
-      />
-    </div>
+    <lib-input
+      [id]="'date'"
+      [label]="'Data'"
+      [placeholder]="'31/03/2025'"
+      [type]="'date'"
+      [control]="date"
+      class="w-full"
+    />
 
     <lib-select
       [id]="'paymentMethod'"

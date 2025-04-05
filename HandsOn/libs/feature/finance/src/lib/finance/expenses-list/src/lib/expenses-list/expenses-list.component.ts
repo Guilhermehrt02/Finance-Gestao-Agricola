@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Column, Row, TableComponent } from '@farm/ui';
+import { ButtonComponent, Column, Row, TableComponent } from '@farm/ui';
 import { ExpensesListComponentFacade } from './expenses-list.component.facade';
 
 @Component({
   selector: 'lib-expenses-list',
-  imports: [CommonModule, TableComponent],
+  imports: [CommonModule, TableComponent, ButtonComponent],
   templateUrl: './expenses-list.component.html',
   styleUrl: './expenses-list.component.css',
 })
@@ -34,6 +34,11 @@ export class ExpensesListComponent implements OnInit{
   refresh() {
     this.facade.load();
   }
+
+  onCreate() {
+    this.facade.navegateToCreateExpense();
+  }
+  
 }
 
 const columns: Column[] = [

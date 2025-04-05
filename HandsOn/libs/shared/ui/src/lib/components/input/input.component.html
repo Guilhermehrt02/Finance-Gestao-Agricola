@@ -39,8 +39,6 @@
       [required]="required"
       [readonly]="readonly || loading"
       [autocomplete]="autocomplete"
-      [minlength]="minlength"
-      [maxlength]="maxlength"
       [variant]="variant"
       [fluid]="fluid"
       [pSize]="size"
@@ -48,6 +46,11 @@
         error: error || hasError,
         'error-border': error || hasError
       }"
+      [min]="type === 'number' ? min : null"
+      [max]="type === 'number' ? max : null"
+      [step]="type === 'number' ? step : null"
+      [minlength]="(type === 'text' || type === 'email' || type === 'search') ? minlength : null"
+      [maxlength]="(type === 'text' || type === 'email' || type === 'search') ? maxlength : null"
       class="w-full"
     />
     <small
