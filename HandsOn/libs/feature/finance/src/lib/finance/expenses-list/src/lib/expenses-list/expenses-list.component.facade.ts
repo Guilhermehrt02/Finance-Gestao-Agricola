@@ -64,20 +64,30 @@ export class ExpensesListComponentFacade {
                     tooltip: 'Excluir',
                     icon: 'pi pi-fw pi-trash',
                     iconClass: 'danger',
-                    action: () => {
-                        console.log('Botão de excluir clicado!', expense.id); 
-                        
+                    command: (data) => {
                         this.confirmationService.confirm({
+                            header: "Excluir Despesa",
                             message: 'Você tem certeza que deseja excluir esta despesa?',
                             accept: () => {
                                 this.expenseFacade.deleteExpense(expense.id).subscribe(() => {
-                                    this.expensesSubject.next(
-                                        this.expensesSubject.value.filter((e) => e['id'] !== expense.id),
-                                    );
+                                    this.load();
                                 });
                             },
                         });
                     },
+                    // action: () => {
+                        
+                    //     this.confirmationService.confirm({
+                    //         message: 'Você tem certeza que deseja excluir esta despesa?',
+                    //         accept: () => {
+                    //             this.expenseFacade.deleteExpense(expense.id).subscribe(() => {
+                    //                 this.expensesSubject.next(
+                    //                     this.expensesSubject.value.filter((e) => e['id'] !== expense.id),
+                    //                 );
+                    //             });
+                    //         },
+                    //     });
+                    // },
                 }
             ] as Action[],
         };
