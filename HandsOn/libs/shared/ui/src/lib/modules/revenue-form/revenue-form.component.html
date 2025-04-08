@@ -1,0 +1,70 @@
+<form
+  [formGroup]="revenueForm"
+  (ngSubmit)="onSubmit()"
+  class="w-full flex flex-col gap-2 mt-6"
+>
+  <div class="w-full max-w-md mx-auto flex flex-col gap-2">
+    <lib-input
+      [id]="'description'"
+      [label]="'Descrição'"
+      [type]="'text'"
+      [placeholder]="'ex. Compra de materiais'"
+      [fluid]="true"
+      [maxlength]="300"
+      [control]="description"
+      class="w-full"
+    ></lib-input>
+
+    <lib-select
+      [id]="'source'"
+      [label]="'Fonte'"
+      [placeholder]="'Selecione uma fonte'"
+        [required]="true"
+        [fluid]="true"
+        [control]="source"
+        [options]="sourceOptions"
+        [filter]="true"
+        class="w-full"
+    ></lib-select>
+
+    <lib-input
+      [id]="'amount'"
+      [label]="'Valor'"
+      [placeholder]="'ex. 100.00'"
+      [type]="'number'"
+      [control]="amount"
+      [min]="0.01"
+      [step]="0.01"
+      class="w-full"
+    />
+
+    <lib-input
+      [id]="'date'"
+      [label]="'Data'"
+      [placeholder]="'31/03/2025'"
+      [type]="'date'"
+      [control]="date"
+      class="w-full"
+    />
+
+    <lib-input
+      [id]="'receiptUrl'"
+      [label]="'Comprovante (URL)'"
+      [type]="'text'"
+      [placeholder]="'ex. https://meus-comprovantes.com/123'"
+      [fluid]="true"
+      [maxlength]="500"
+      [control]="receiptUrl"
+      class="w-full"
+    ></lib-input>
+  </div>
+
+  <lib-button
+    class="w-full max-w-96 mt-6 mx-auto"
+    [label]="submitLabel"
+    [type]="'submit'"
+    [fluid]="true"
+    [severity]="'primary'"
+    [loading]="loading"
+  ></lib-button>
+</form>

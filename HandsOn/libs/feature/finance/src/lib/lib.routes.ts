@@ -8,8 +8,8 @@ export const financeRoutes: Route[] = [
     children: [
       {
         path: '',
-        redirectTo: 'expenses',
-        pathMatch: 'full', 
+        redirectTo: 'revenues',
+        pathMatch: 'full',
       },
       {
         path: 'expenses',
@@ -26,6 +26,21 @@ export const financeRoutes: Route[] = [
         loadChildren: () =>
           import('@farm/expense').then((m) => m.expenseRoutes),
       },
+      {
+        path: 'revenues',
+        loadChildren: () =>
+          import('@farm/revenue-list').then((m) => m.revenueListRoutes),
+      },
+      {
+        path: 'revenues/create',
+        loadChildren: () =>
+          import('@farm/revenue').then((m) => m.revenueRoutes),
+      },
+      {
+        path: 'revenues/:id',
+        loadChildren: () =>
+          import('@farm/revenue').then((m) => m.revenueRoutes),
+      }
     ],
   },
 ];

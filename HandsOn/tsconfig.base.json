@@ -39,6 +39,12 @@
       "@farm/main": ["libs/master-page/src/lib/master-page/main/src/index.ts"],
       "@farm/master-page": ["libs/master-page/src/index.ts"],
       "@farm/not-found": ["libs/feature/not-found/src/index.ts"],
+      "@farm/revenue": [
+        "libs/feature/finance/src/lib/finance/revenue/src/index.ts"
+      ],
+      "@farm/revenue-list": [
+        "libs/feature/finance/src/lib/finance/revenue-list/src/index.ts"
+      ],
       "@farm/security": [
         "libs/feature/settings/src/lib/settings/security/src/index.ts"
       ],
