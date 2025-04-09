@@ -8,7 +8,7 @@ export const financeRoutes: Route[] = [
     children: [
       {
         path: '',
-        redirectTo: 'revenues',
+        redirectTo: 'reports',
         pathMatch: 'full',
       },
       {
@@ -40,6 +40,11 @@ export const financeRoutes: Route[] = [
         path: 'revenues/:id',
         loadChildren: () =>
           import('@farm/revenue').then((m) => m.revenueRoutes),
+      },
+      {
+        path: 'reports',
+        loadChildren: () =>
+          import('@farm/reports').then((m) => m.reportsRoutes),
       }
     ],
   },

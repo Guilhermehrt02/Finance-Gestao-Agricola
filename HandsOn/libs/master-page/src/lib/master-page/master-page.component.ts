@@ -53,8 +53,13 @@ export class MasterPageComponent implements OnInit, OnDestroy {
     
     menuItems.push({
       label: 'finance',
-      icon: 'pi pi-fw pi-chart-bar',
+      icon: 'pi pi-fw pi-money-bill',  
       items: [
+        {
+          label: 'Relatórios',
+          icon: 'pi pi-fw pi-chart-line',
+          routerLink: '/app/finance/reports',
+        },
         {
           label: 'Despesas',
           icon: 'pi pi-fw pi-arrow-up-right',
