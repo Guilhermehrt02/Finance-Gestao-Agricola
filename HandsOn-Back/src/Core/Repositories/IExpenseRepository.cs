@@ -9,5 +9,6 @@ namespace Core.Repositories
         Task<Expense> AddAsync(Expense expense);
         Task<Expense> UpdateAsync(Expense expense);
         Task<Expense> DeleteAsync(Expense expense);
+        Task<IEnumerable<Expense>> GetAllByUserIdAndDateRangeAsync(Guid userId, DateTime startDate, DateTime endDate, string[]? category);
     }
 }

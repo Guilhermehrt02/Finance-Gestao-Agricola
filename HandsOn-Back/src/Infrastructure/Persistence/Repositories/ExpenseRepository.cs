@@ -1,4 +1,5 @@
 using Core.Entities;
+using Core.Enums;
 using Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,5 +45,36 @@ namespace Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
             return result.Entity;
         }
+
+        public async Task<IEnumerable<Expense>> GetAllByUserIdAndDateRangeAsync(Guid userId, DateTime startDate, DateTime endDate, string[]? category)
+        {
+            if (category != null && category.Length > 0)
+            {
+                var categoryValues = category
+                    .Select(c => (int)c.ToCategory()) // converte para enum e depois para int
+                    .ToArray();
+
+                var categoryInClause = string.Join(", ", categoryValues); // ex: "1, 2, 3"
+
+                var sql = $@"
+                    SELECT * FROM Expenses 
+                    WHERE UserId = {{0}} 
+                    AND Date >= {{1}} 
+                    AND Date <= {{2}} 
+                    AND Category IN ({categoryInClause})";
+
+                return await _context.Expenses
+                    .FromSqlRaw(sql, userId, startDate, endDate)
+                    .ToListAsync();
+
+            }
+            else
+            {
+                return await _context.Expenses
+                    .Where(e => e.UserId == userId && e.Date >= startDate && e.Date <= endDate)
+                    .ToListAsync();
+            }
+        }
+
     }
 }

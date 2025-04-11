@@ -19,6 +19,7 @@ namespace Application
             services.AddScoped<IUsersServices, UsersServices>();
             services.AddScoped<IExpenseServices, ExpenseServices>();
             services.AddScoped<IRevenueServices, RevenueServices>();
+            services.AddScoped<IReportServices, ReportServices>();
             return services;
         }
     }

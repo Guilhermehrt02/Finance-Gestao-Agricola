@@ -18,7 +18,7 @@ namespace Core.Enums
                 Source.Salary => "Salary",
                 Source.Bonus => "Bonus",
                 Source.Investment => "Investment",
-                Source.RentalIncome => "Rental Income",
+                Source.RentalIncome => "RentalIncome",
                 Source.Other => "Other",
                 _ => "Unknown",
             };

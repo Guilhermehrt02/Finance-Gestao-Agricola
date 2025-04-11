@@ -1,0 +1,22 @@
+using Core.Entities;
+using Core.Enums;
+
+namespace Application.ViewModels
+{
+    public class RevenueDataModel
+    {
+        public string Source { get; set; } = string.Empty;
+        public decimal Amount { get; set; }
+        public DateTime Date { get; set; }
+
+        public static RevenueDataModel FromEntity(Revenue revenue)
+        {
+            return new RevenueDataModel
+            {
+                Source = revenue.Source.ToFriendlyString(),
+                Amount = revenue.Amount,
+                Date = revenue.Date
+            };
+        }
+    }
+}
