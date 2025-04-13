@@ -1,4 +1,3 @@
-
 <div class="p-6">
   <div class="flex justify-between items-center mb-4">
     <h2 class="text-2xl font-bold">Minhas Despesas</h2>
@@ -11,10 +10,10 @@
   </div>
 
   <lib-table
-  [data]="data"
-  [columns]="columns"
-  [loading]="loading"
-  [showMoreButton]="showMoreButton"
-  (refresh)="refresh()"
+    [data]="data"
+    [columns]="columns"
+    [loading]="loading"
+    [showMoreButton]="showMoreButton"
+    (refresh)="refresh()"
   />
 </div>

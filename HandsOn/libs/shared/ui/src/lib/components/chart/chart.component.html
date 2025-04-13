@@ -1,0 +1,30 @@
+<ng-container *ngIf="floatLabel; else noFloatLabel">
+  <p-floatlabel [variant]="floatLabelType">
+    <ng-container *ngTemplateOutlet="chartContent"></ng-container>
+  </p-floatlabel>
+</ng-container>
+
+<ng-template #noFloatLabel>
+  <ng-container *ngTemplateOutlet="chartContent"></ng-container>
+</ng-template>
+
+<ng-template #chartContent>
+  <div class="w-full flex flex-col gap-2">
+    <label *ngIf="label && label.length > 0" for="chart">{{ label }}</label>
+    
+    <div [ngClass]="className || 'flex justify-center items-center w-full max-w-4xl h-[300px] overflow-hidden'">
+        <p-chart
+        id="chart"
+        [type]="type"
+        [data]="data"
+        [options]="options"
+        [responsive]="true"
+        *ngIf="!loading"
+        ></p-chart>
+    </div>
+
+    <p *ngIf="loading" class="text-center text-sm text-gray-500">
+      Carregando gráfico...
+    </p>
+  </div>
+</ng-template>
