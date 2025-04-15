@@ -1,40 +1,35 @@
 import { Injectable } from '@angular/core';
-import { ReportsService } from '../services/reports/reports.service';
-import { ReportSummary } from '../models/report-summary.model';
-import { ReportFilters } from '../models/report-filters.model';
+import { ReportService } from '../services/reports/report.service';
 import { NotificationService } from '../services/notification/notification.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ReportInput } from '../models/report-input.model';
+import { ReportData } from '../models/report-data.model';
 
 @Injectable({ 
     providedIn: 'root' 
 })
-export class ReportsFacade {
-    private reportDataSubject = new BehaviorSubject<ReportSummary | null>(null);
+export class ReportFacade {
+    private reportDataSubject = new BehaviorSubject<ReportData | null>(null);
     private loadingSubject = new BehaviorSubject<boolean>(true);
   
-    reportData$: Observable<ReportSummary | null> = this.reportDataSubject.asObservable();
+    reportData$: Observable<ReportData | null> = this.reportDataSubject.asObservable();
     loading$: Observable<boolean> = this.loadingSubject.asObservable();
   
     constructor(
-      private reportsService: ReportsService,
+      private reportService: ReportService,
       private notificationService: NotificationService
     ) {}
   
-    getReportData(filters: ReportFilters): Observable<ReportSummary> {
+    getReportData(reportInput: ReportInput): Observable<ReportData> {
       this.loadingSubject.next(true);
-      return this.reportsService.fetchReportData(filters).pipe(
+      return this.reportService.fetchReportData(reportInput).pipe(
         tap({
-          next: (data) => {
-            this.reportDataSubject.next(data);
-            this.loadingSubject.next(false);
-          },
           error: () => {
             this.notificationService.error(
               'Erro!',
               'Não foi possível carregar os dados do relatório!'
             );
-            this.loadingSubject.next(false);
           },
         })
       );

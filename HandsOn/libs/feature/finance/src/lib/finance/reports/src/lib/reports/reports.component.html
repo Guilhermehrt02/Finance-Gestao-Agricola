@@ -1,1 +1,14 @@
-<p>Reports works!</p>
+<div class="p-6 space-y-6">
+    <!-- <lib-summary></lib-summary> -->
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <lib-expense-chart
+            [type]="'pie'"
+            [data]="expenseChartData"
+            [label]="'Despesas por categoria'"
+            [loading]="loading"
+        ></lib-expense-chart>
+
+        <!-- <lib-revenue-chart></lib-revenue-chart> -->
+    </div>
+</div>

@@ -10,6 +10,9 @@ export * from './lib/models/token.model';
 export * from './lib/models/user.model';
 export * from './lib/models/expense.model';
 export * from './lib/models/revenue.model';
+export * from './lib/models/report-data.model';
+export * from './lib/models/expense-chart.model';
+export * from './lib/models/report-input.model';
 
 // services
 export * from './lib/services/authentication/authentication.service';
@@ -19,12 +22,14 @@ export * from './lib/services/request/request.service';
 export * from './lib/services/user/user.service';
 export * from './lib/services/expense/expense.service';
 export * from './lib/services/revenue/revenue.service';
+export * from './lib/services/reports/report.service';
 
 // facades
 export * from './lib/facades/auth.facade';
 export * from './lib/facades/user.facade';
 export * from './lib/facades/expense.facade';
 export * from './lib/facades/revenue.facade';
+export * from './lib/facades/report.facade';
 
 // guards
 export * from './lib/guards/authenticated/authenticated.guard';
