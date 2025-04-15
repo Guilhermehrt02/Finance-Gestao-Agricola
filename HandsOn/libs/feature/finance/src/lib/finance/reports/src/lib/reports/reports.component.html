@@ -2,13 +2,18 @@
     <!-- <lib-summary></lib-summary> -->
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <lib-expense-chart
+        <lib-report-chart
             [type]="'pie'"
             [data]="expenseChartData"
             [label]="'Despesas por categoria'"
             [loading]="loading"
-        ></lib-expense-chart>
+        ></lib-report-chart>
 
-        <!-- <lib-revenue-chart></lib-revenue-chart> -->
+        <lib-report-chart
+            [type]="'pie'"
+            [data]="revenueChartData"
+            [label]="'Receitas por categoria'"
+            [loading]="loading"
+        ></lib-report-chart>
     </div>
 </div>

@@ -5,6 +5,7 @@ import {
     ExpenseData,
     ReportInput,
     ReportFacade,
+    RevenueData,
     // RevenueSourceSummary, 
     // Summary 
 } from '@farm/core';
@@ -15,12 +16,12 @@ export class ReportComponentFacade {
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     private expenseChartSubject = new BehaviorSubject<ExpenseData[]>([]);
-
-//   private revenueChartSubject = new BehaviorSubject<RevenueData[]>([]);
+    private revenueChartSubject = new BehaviorSubject<RevenueData[]>([]);
 //   private summarySubject = new BehaviorSubject<Summary | null>(null);
 
     loading$: Observable<boolean> = this.loadingSubject.asObservable();
     expenseChart$: Observable<ExpenseData[] | null> = this.expenseChartSubject.asObservable();
+    revenueChart$: Observable<RevenueData[] | null> = this.revenueChartSubject.asObservable();
 
 //   revenueChart$ = this.revenueChartSubject.asObservable();
 //   summary$ = this.summarySubject.asObservable();
@@ -39,6 +40,7 @@ export class ReportComponentFacade {
                 tap(
                     (reportData) => {
                         this.expenseChartSubject.next(reportData.expenses || []);
+                        this.revenueChartSubject.next(reportData.revenues || []);
                         this.loadingSubject.next(false);
                     },
                     (error) => {

@@ -11,8 +11,9 @@ export * from './lib/models/user.model';
 export * from './lib/models/expense.model';
 export * from './lib/models/revenue.model';
 export * from './lib/models/report-data.model';
-export * from './lib/models/expense-chart.model';
+export * from './lib/models/expense-data-chart.model';
 export * from './lib/models/report-input.model';
+export * from './lib/models/revenue-data-chart.model';
 
 // services
 export * from './lib/services/authentication/authentication.service';

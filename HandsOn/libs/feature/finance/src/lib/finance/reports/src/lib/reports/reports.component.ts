@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExpenseChartComponent } from '@farm/ui';
-import { ExpenseData } from '@farm/core';
+import { ReportChartComponent } from '@farm/ui';
 import { ReportComponentFacade } from './reports.facade.component';
 import { ChartData } from 'chart.js';
 
 @Component({
   selector: 'lib-reports',
-  imports: [CommonModule, ExpenseChartComponent],
+  imports: [CommonModule, ReportChartComponent],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css',
 })
@@ -15,6 +14,11 @@ export class ReportsComponent implements OnInit{
   loading = false;
   
   expenseChartData: ChartData<'pie', number[], unknown> | null = {
+    labels: [],
+    datasets: [{ data: [], backgroundColor: [] }],
+  };
+
+  revenueChartData: ChartData<'pie', number[], unknown> | null = {
     labels: [],
     datasets: [{ data: [], backgroundColor: [] }],
   };
@@ -28,8 +32,13 @@ export class ReportsComponent implements OnInit{
     });
 
     this.facade.expenseChart$.subscribe((chartData) => {
-      const data = chartData ?? [];
-      this.expenseChartData = this.transformToChartData(data);
+      const expenseData = chartData ?? [];
+      this.expenseChartData = this.transformToChartData(expenseData);
+    });
+
+    this.facade.revenueChart$.subscribe((chartData) => {
+      const revenueData = chartData ?? [];
+      this.revenueChartData = this.transformToChartData(revenueData);
     });
 
     this.facade.load({
@@ -38,9 +47,9 @@ export class ReportsComponent implements OnInit{
     });  
   }
 
-  transformToChartData(data: ExpenseData[]): ChartData<'pie', number[], unknown> {
+  transformToChartData(data: any[]): ChartData<'pie', number[], unknown> {
     return {
-      labels: data.map(d => d.category),
+      labels: data.map(d => d.category || d.source),
       datasets: [
         {
           data: data.map(d => d.amount),

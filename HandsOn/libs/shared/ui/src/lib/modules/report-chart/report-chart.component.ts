@@ -4,12 +4,12 @@ import { ChartModule } from 'primeng/chart';
 import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
-  selector: 'lib-expense-chart',
+  selector: 'lib-report-chart',
   imports: [CommonModule, ChartModule],
-  templateUrl: './expense-chart.component.html',
-  styleUrl: './expense-chart.component.css',
+  templateUrl: './report-chart.component.html',
+  styleUrl: './report-chart.component.css',
 })
-export class ExpenseChartComponent implements OnInit {
+export class ReportChartComponent implements OnInit{ 
   @Input() data: ChartData<'pie', number[], unknown> | null = null;
   @Input() options: ChartOptions = {};
   @Input() type: 'pie' | 'doughnut' | 'bar' | 'line' | 'polarArea' | 'radar' = 'pie';
