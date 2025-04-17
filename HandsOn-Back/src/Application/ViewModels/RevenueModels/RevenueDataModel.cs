@@ -1,7 +1,7 @@
 using Core.Entities;
 using Core.Enums;
 
-namespace Application.ViewModels
+namespace Application.ViewModels.RevenueModels
 {
     public class RevenueDataModel
     {

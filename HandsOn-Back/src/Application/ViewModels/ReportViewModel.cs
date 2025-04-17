@@ -1,7 +1,8 @@
 using Core.Entities;
 using Core.Enums;
-using Application.InputModels.ReportModels;
 using Application.ViewModels.ExpenseModels;
+using Application.ViewModels.RevenueModels;
+using Application.ViewModels;
 
 namespace Application.ViewModels
 {
@@ -12,6 +13,7 @@ namespace Application.ViewModels
         public decimal TotalBalance { get; set; }
         public ExpenseDataModel[] Expenses { get; set; } = [];
         public RevenueDataModel[] Revenues { get; set; } = [];
+        public RevenueAndExpenseDataModel[] RevenueAndExpenseByPeriod {get; set; } = [];
 
         public static ReportViewModel FromEntity(Report report)
         {

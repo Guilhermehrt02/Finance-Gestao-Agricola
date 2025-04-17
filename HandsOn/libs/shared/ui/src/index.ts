@@ -21,4 +21,3 @@ export * from './lib/modules/expense-form/expense-form.component';
 export * from './lib/modules/revenue-form/revenue-form.component';
 export * from './lib/components/chart/chart.component';
 export * from './lib/modules/report-chart/report-chart.component';
-
