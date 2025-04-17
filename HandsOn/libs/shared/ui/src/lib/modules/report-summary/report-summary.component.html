@@ -1,0 +1,23 @@
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <p-card header="Saldo">
+    <div class="text-blue-600 text-2xl font-bold">
+      {{ totalBalance | currency : 'BR' : 'symbol' }}
+    </div>
+  </p-card>
+
+  <p-card header="Receitas" *ngIf="!loading">
+    <div class="text-green-600 text-2xl font-bold">
+      {{ totalRevenues | currency : 'BR' : 'symbol' }}
+    </div>
+  </p-card>
+
+  <p-card header="Despesas" *ngIf="!loading">
+    <div class="text-red-600 text-2xl font-bold">
+      {{ totalExpenses | currency : 'BR' : 'symbol' }}
+    </div>
+  </p-card>
+
+  <p *ngIf="loading" class="text-center text-sm text-gray-400">
+    Carregando sumário...
+  </p>
+</div>

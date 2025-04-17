@@ -1,27 +1,39 @@
 <div class="p-6 space-y-6">
-    <!-- <lib-summary></lib-summary> -->
 
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <lib-report-chart
-            [type]="'pie'"
-            [data]="expenseChartData"
-            [label]="'Despesas por categoria'"
-            [loading]="loading"
-        ></lib-report-chart>
+    <lib-report-summary
+      [totalBalance]="totalBalance"
+      [totalRevenues]="totalRevenues"
+      [totalExpenses]="totalExpenses"
+      [loading]="loading"
+    ></lib-report-summary>
 
-        <lib-report-chart
-            [type]="'pie'"
-            [data]="revenueChartData"
-            [label]="'Receitas por categoria'"
-            [loading]="loading"
-        ></lib-report-chart>
-
-        <!-- <lib-report-chart
-            [type]="'bar'"
-            [data]="barChartData"
-            [label]="'Saldo por categoria'"
-            [loading]="loading"
-            [options]="{ responsive: true }" 
-        ></lib-report-chart> -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-gray-900 p-5 rounded shadow-md">
+      <h2 class="text-white text-lg font-semibold mb-4">Despesas por categoria</h2>
+      <lib-report-chart
+        [type]="'pie'"
+        [data]="expenseChartData"
+        [loading]="loading"
+      ></lib-report-chart>
     </div>
+
+    <div class="bg-gray-900 p-5 rounded shadow-md">
+      <h2 class="text-white text-lg font-semibold mb-4">Receitas por categoria</h2>
+      <lib-report-chart
+        [type]="'pie'"
+        [data]="revenueChartData"
+        [loading]="loading"
+      ></lib-report-chart>
+    </div>
+
+    <div class="md:col-span-2 bg-gray-900 p-5 rounded shadow-md">
+      <h2 class="text-white text-lg font-semibold mb-4">Saldo por período</h2>
+      <lib-report-chart
+        [type]="'bar'"
+        [data]="barChartData"
+        [loading]="loading"
+        [options]="{ responsive: true }"
+      ></lib-report-chart>
+    </div>
+  </div>
 </div>

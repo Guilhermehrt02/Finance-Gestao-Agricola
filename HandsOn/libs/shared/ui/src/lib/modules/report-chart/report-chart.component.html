@@ -1,19 +1,25 @@
-<div class="w-full flex flex-col gap-2"> <!--"w-full max-w-md mx-auto flex flex-col gap-2"-->
-    <label *ngIf="label && label.length > 0" for="chart">{{ label }}</label>
-  
-    <div [ngClass]="className">
-      <p-chart
-        id="chart"
-        [type]="type"
-        [data]="data"
-        [options]="options"
-        [responsive]="true"
-        *ngIf="!loading"
-      ></p-chart>
-  
-      <p *ngIf="loading" class="text-center text-sm text-gray-500">
-        Carregando gráfico...
-      </p>
-    </div>
+<div class="">
+  <label
+    *ngIf="label && label.length > 0"
+    for="chart"
+    class="text-white text-lg font-semibold"
+  >
+    {{ label }}
+  </label>
+
+  <div [ngClass]="className" class="w-full h-full">
+    <p-chart
+      id="chart"
+      [type]="type"
+      [data]="data"
+      [options]="options"
+      [responsive]="true"
+      *ngIf="!loading"
+      styleClass="w-full h-full"
+    ></p-chart>
+
+    <p *ngIf="loading" class="text-center text-sm text-gray-400">
+      Carregando gráfico...
+    </p>
   </div>
-  
+</div>
