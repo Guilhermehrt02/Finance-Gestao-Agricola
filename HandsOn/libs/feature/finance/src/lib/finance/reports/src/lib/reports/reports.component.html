@@ -1,15 +1,23 @@
 <div class="p-6 space-y-6">
 
-    <lib-report-summary
-      [totalBalance]="totalBalance"
-      [totalRevenues]="totalRevenues"
-      [totalExpenses]="totalExpenses"
-      [loading]="loading"
-    ></lib-report-summary>
+  <div class="flex justify-end mb-4">
+    <lib-date-range-filter
+      (dateRangeChange)="onSubmit($event)"
+    ></lib-date-range-filter>
+  </div>
+  
+  <lib-report-summary
+    [totalBalance]="totalBalance"
+    [totalRevenues]="totalRevenues"
+    [totalExpenses]="totalExpenses"
+    [loading]="loading"
+  ></lib-report-summary>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="bg-gray-900 p-5 rounded shadow-md">
-      <h2 class="text-white text-lg font-semibold mb-4">Despesas por categoria</h2>
+      <h2 class="text-white text-lg font-semibold mb-4">
+        Despesas por categoria
+      </h2>
       <lib-report-chart
         [type]="'pie'"
         [data]="expenseChartData"
@@ -18,7 +26,9 @@
     </div>
 
     <div class="bg-gray-900 p-5 rounded shadow-md">
-      <h2 class="text-white text-lg font-semibold mb-4">Receitas por categoria</h2>
+      <h2 class="text-white text-lg font-semibold mb-4">
+        Receitas por categoria
+      </h2>
       <lib-report-chart
         [type]="'pie'"
         [data]="revenueChartData"

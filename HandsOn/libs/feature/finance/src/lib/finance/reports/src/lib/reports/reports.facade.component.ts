@@ -41,4 +41,8 @@ export class ReportComponentFacade {
             )
             .subscribe();
     }
+
+    submit(reportInput: ReportInput) {
+        this.load(reportInput);
+    }
 }

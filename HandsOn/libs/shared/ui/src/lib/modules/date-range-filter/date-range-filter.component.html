@@ -1,0 +1,65 @@
+<div class="flex flex-wrap gap-2 items-center">
+  <button 
+    class="px-4 py-2 rounded font-medium transition"
+    [ngClass]="{
+      'bg-blue-500 text-white': selectedOption === 'thisMonth',
+      'bg-gray-700 text-white': selectedOption !== 'thisMonth'
+    }"
+    (click)="selectPredefined('thisMonth')">
+    Este mês
+  </button>
+
+  <button 
+    class="px-4 py-2 rounded font-medium transition"
+    [ngClass]="{
+      'bg-blue-500 text-white': selectedOption === 'lastMonth',
+      'bg-gray-700 text-white': selectedOption !== 'lastMonth'
+    }"
+    (click)="selectPredefined('lastMonth')">
+    Mês passado
+  </button>
+
+  <button 
+    class="px-4 py-2 rounded font-medium transition"
+    [ngClass]="{
+      'bg-blue-500 text-white': selectedOption === 'thisYear',
+      'bg-gray-700 text-white': selectedOption !== 'thisYear'
+    }"
+    (click)="selectPredefined('thisYear')">
+    Este ano
+  </button>
+
+  <button 
+    class="px-4 py-2 rounded font-medium transition"
+    [ngClass]="{
+      'bg-blue-500 text-white': selectedOption === 'last12Months',
+      'bg-gray-700 text-white': selectedOption !== 'last12Months'
+    }"
+    (click)="selectPredefined('last12Months')">
+    Últimos 12 meses
+  </button>
+
+  <button 
+    class="px-4 py-2 border rounded font-medium flex items-center gap-2 transition"
+    [ngClass]="{
+      'bg-blue-500 text-white border-blue-500': showCustomPicker,
+      'bg-gray-700 text-white border-gray-600': !showCustomPicker
+    }"
+    (click)="toggleCustomPicker()">
+    <i class="pi pi-calendar"></i>
+    Personalizado 
+  </button>
+
+  <div *ngIf="showCustomPicker" class="flex gap-2 mt-2">
+    <input 
+      class="border border-gray-600 bg-gray-800 text-white px-3 py-2 rounded" 
+      type="date" 
+      formControlName="startDate" 
+      (change)="onCustomDateChange()" />
+    <input 
+      class="border border-gray-600 bg-gray-800 text-white px-3 py-2 rounded" 
+      type="date" 
+      formControlName="endDate" 
+      (change)="onCustomDateChange()" />
+  </div>
+</div>

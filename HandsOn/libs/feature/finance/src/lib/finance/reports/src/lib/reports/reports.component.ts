@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReportChartComponent, ReportSummaryComponent } from '@farm/ui';
+import { ReportChartComponent, ReportSummaryComponent, DateRangeFilterComponent } from '@farm/ui';
 import { ReportComponentFacade } from './reports.facade.component';
 import { ChartData } from 'chart.js';
+import { startOfMonth, endOfMonth } from 'date-fns';
 
 @Component({
   selector: 'lib-reports',
-  imports: [CommonModule, ReportChartComponent, ReportSummaryComponent],
+  imports: [
+    CommonModule, 
+    ReportChartComponent, 
+    ReportSummaryComponent, 
+    DateRangeFilterComponent
+  ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css',
 })
@@ -50,6 +56,11 @@ export class ReportsComponent implements OnInit{
       this.loading = loading;
     });
 
+    this.facade.load({
+      startDate: startOfMonth(new Date()),
+      endDate: endOfMonth(new Date())
+    });  
+
     this.facade.expenseAndRevenueData$.subscribe((data) => {
       this.expenseChartData = this.transformToChartData(data?.expenses || []);
       this.revenueChartData = this.transformToChartData(data?.revenues || []); 
@@ -59,10 +70,13 @@ export class ReportsComponent implements OnInit{
       this.totalBalance = data?.totalBalance || 0;
     });
 
-    this.facade.load({
-      startDate: new Date('2024-01-01'),  
-      endDate: new Date()
-    });  
+  }
+
+  onSubmit(dataRange: { startDate: string; endDate: string }) {
+    this.facade.submit({
+      startDate: new Date(dataRange.startDate),
+      endDate: new Date(dataRange.endDate ? dataRange.endDate : new Date()),
+    });
   }
 
   transformToChartData(data: any[]): ChartData<'pie', number[], unknown> {

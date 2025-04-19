@@ -8,7 +8,6 @@ namespace Application.InputModels.ReportModels
         [CustomValidation(typeof(CreateReportInputModel), nameof(ValidatePeriod))]
         public DateTime StartDate { get; set; }
 
-        [CustomValidation(typeof(CreateReportInputModel), nameof(ValidateDate))]
         public DateTime? EndDate { get; set; }
 
         [CustomValidation(typeof(CreateReportInputModel), nameof(ValidateText))]
@@ -16,15 +15,6 @@ namespace Application.InputModels.ReportModels
         
         [CustomValidation(typeof(CreateReportInputModel), nameof(ValidateText))]
         public string[]? Source { get; set; } = [];
-
-        public static ValidationResult? ValidateDate(DateTime? date, ValidationContext context)
-        {
-            if (date.HasValue && date.Value > DateTime.Now)
-            {
-                return new ValidationResult("Date cannot be in the future.");
-            }
-            return ValidationResult.Success;
-        }
 
         public static ValidationResult? ValidateText(string[]? text, ValidationContext context)
         {
@@ -64,10 +54,6 @@ namespace Application.InputModels.ReportModels
             // If EndDate exists, validate it
             if (instance.EndDate.HasValue)
             {
-                if (instance.EndDate.Value > DateTime.Now)
-                {
-                    return new ValidationResult("End date must be in the past.");
-                }
 
                 if (startDate > instance.EndDate.Value)
                 {
