@@ -72,16 +72,18 @@ export class ReportsComponent implements OnInit{
 
   }
 
-  onSubmit(dataRange: { startDate: string; endDate: string }) {
+  onSubmit(filters: { startDate: string; endDate: string; category?: string[]; source?: string[] }) {
     this.facade.submit({
-      startDate: new Date(dataRange.startDate),
-      endDate: new Date(dataRange.endDate ? dataRange.endDate : new Date()),
+      startDate: new Date(filters.startDate),
+      endDate: new Date(filters.endDate),
+      category: filters.category,
+      source: filters.source,
     });
-  }
+  }  
 
   transformToChartData(data: any[]): ChartData<'pie', number[], unknown> {
     return {
-      labels: data.map(d => d.category || d.source),
+      labels: data.map(d => d.label),
       datasets: [
         {
           data: data.map(d => d.amount),
@@ -89,7 +91,7 @@ export class ReportsComponent implements OnInit{
         },
       ],
     };
-  } 
+  }
   
   transformToBarChartData(data: any[]): ChartData<'bar', number[], unknown> {
     const labels: string[] = [];
@@ -117,12 +119,12 @@ export class ReportsComponent implements OnInit{
         {
           label: 'Receita',
           data: revenueData,
-          backgroundColor: '#42A5F5', // Cor para barras de receita
+          backgroundColor: '#42A5F5', 
         },
         {
           label: 'Despesa',
           data: expenseData,
-          backgroundColor: '#FF7043', // Cor para barras de despesa
+          backgroundColor: '#FF7043', 
         },
       ],
     };

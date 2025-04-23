@@ -1,65 +1,104 @@
-<div class="flex flex-wrap gap-2 items-center">
-  <button 
-    class="px-4 py-2 rounded font-medium transition"
-    [ngClass]="{
-      'bg-blue-500 text-white': selectedOption === 'thisMonth',
-      'bg-gray-700 text-white': selectedOption !== 'thisMonth'
-    }"
-    (click)="selectPredefined('thisMonth')">
-    Este mês
-  </button>
+<div class="p-4 bg-gray-900 border border-gray-700 rounded-md shadow-md space-y-4">
+  <!-- Botões de período -->
+  <div class="flex flex-wrap gap-2 items-center">
+    <button
+      class="px-4 py-2 rounded font-medium transition"
+      [ngClass]="{
+        'bg-blue-500 text-white': selectedOption === 'thisMonth',
+        'bg-gray-700 text-white': selectedOption !== 'thisMonth'
+      }"
+      (click)="selectPredefined('thisMonth')"
+    >
+      Este mês
+    </button>
 
-  <button 
-    class="px-4 py-2 rounded font-medium transition"
-    [ngClass]="{
-      'bg-blue-500 text-white': selectedOption === 'lastMonth',
-      'bg-gray-700 text-white': selectedOption !== 'lastMonth'
-    }"
-    (click)="selectPredefined('lastMonth')">
-    Mês passado
-  </button>
+    <button
+      class="px-4 py-2 rounded font-medium transition"
+      [ngClass]="{
+        'bg-blue-500 text-white': selectedOption === 'lastMonth',
+        'bg-gray-700 text-white': selectedOption !== 'lastMonth'
+      }"
+      (click)="selectPredefined('lastMonth')"
+    >
+      Mês passado
+    </button>
 
-  <button 
-    class="px-4 py-2 rounded font-medium transition"
-    [ngClass]="{
-      'bg-blue-500 text-white': selectedOption === 'thisYear',
-      'bg-gray-700 text-white': selectedOption !== 'thisYear'
-    }"
-    (click)="selectPredefined('thisYear')">
-    Este ano
-  </button>
+    <button
+      class="px-4 py-2 rounded font-medium transition"
+      [ngClass]="{
+        'bg-blue-500 text-white': selectedOption === 'thisYear',
+        'bg-gray-700 text-white': selectedOption !== 'thisYear'
+      }"
+      (click)="selectPredefined('thisYear')"
+    >
+      Este ano
+    </button>
 
-  <button 
-    class="px-4 py-2 rounded font-medium transition"
-    [ngClass]="{
-      'bg-blue-500 text-white': selectedOption === 'last12Months',
-      'bg-gray-700 text-white': selectedOption !== 'last12Months'
-    }"
-    (click)="selectPredefined('last12Months')">
-    Últimos 12 meses
-  </button>
+    <button
+      class="px-4 py-2 rounded font-medium transition"
+      [ngClass]="{
+        'bg-blue-500 text-white': selectedOption === 'last12Months',
+        'bg-gray-700 text-white': selectedOption !== 'last12Months'
+      }"
+      (click)="selectPredefined('last12Months')"
+    >
+      Últimos 12 meses
+    </button>
 
-  <button 
-    class="px-4 py-2 border rounded font-medium flex items-center gap-2 transition"
-    [ngClass]="{
-      'bg-blue-500 text-white border-blue-500': showCustomPicker,
-      'bg-gray-700 text-white border-gray-600': !showCustomPicker
-    }"
-    (click)="toggleCustomPicker()">
-    <i class="pi pi-calendar"></i>
-    Personalizado 
-  </button>
+    <button
+      class="px-4 py-2 border rounded font-medium flex items-center gap-2 transition"
+      [ngClass]="{
+        'bg-blue-500 text-white border-blue-500': showCustomPicker,
+        'bg-gray-700 text-white border-gray-600': !showCustomPicker
+      }"
+      (click)="toggleCustomPicker()"
+    >
+      <i class="pi pi-calendar"></i>
+      Personalizado
+    </button>
+  </div>
 
-  <div *ngIf="showCustomPicker" class="flex gap-2 mt-2">
-    <input 
-      class="border border-gray-600 bg-gray-800 text-white px-3 py-2 rounded" 
-      type="date" 
-      formControlName="startDate" 
-      (change)="onCustomDateChange()" />
-    <input 
-      class="border border-gray-600 bg-gray-800 text-white px-3 py-2 rounded" 
-      type="date" 
-      formControlName="endDate" 
-      (change)="onCustomDateChange()" />
+  <div *ngIf="showCustomPicker" class="flex flex-col gap-4">
+    
+    <div class="flex flex-wrap gap-2">
+      <lib-input
+        [id]="'date'"
+        [label]="'Data Inicial'"
+        [type]="'date'"
+        [placeholder]="startDatePlaceholder"
+        [control]="startDate"
+        class="flex-1"
+      />
+      <lib-input
+        [id]="'date'"
+        [label]="'Data Final'"
+        [type]="'date'"
+        [placeholder]="endDatePlaceholder"
+        [control]="endDate"
+        class="flex-1"
+      />
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <lib-select
+        [options]="expenseCategories"
+        placeholder="Filtrar por categoria"
+        [control]="category"
+        [multiple]="true"
+        class="flex-1"
+      ></lib-select>
+
+      <lib-select
+        [options]="revenueSources"
+        placeholder="Filtrar por fonte"
+        [control]="source"
+        [multiple]="true"
+        class="flex-1"
+      ></lib-select>
+    </div>
+
+    <div class="text-right">
+      <lib-button label="Aplicar" (click)="onCustomDateChange()"></lib-button>
+    </div>
   </div>
 </div>

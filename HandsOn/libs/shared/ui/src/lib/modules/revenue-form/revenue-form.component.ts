@@ -23,6 +23,7 @@ import {
 } from '../../components/select/select.component';
 import {
   Revenue,
+  RevenueSourceLabels
 } from '@farm/core';
 
 @Component({
@@ -47,13 +48,9 @@ export class RevenueFormComponent implements OnInit, OnChanges {
 
   revenueForm: FormGroup;
 
-  sourceOptions: SelectOption[] = [
-    { label: 'Salário', value: 'Salary' },
-    { label: 'Bônus', value: 'Bonus' },
-    { label: 'Investimento', value: 'Investment' },
-    { label: 'Renda de Aluguel', value: 'RentalIncome' },
-    { label: 'Outros', value: 'Other' }
-  ];
+  sourceOptions: SelectOption[] = Object.entries(RevenueSourceLabels).map(
+    ([value, label]) => ({ value, label })
+  );
 
   constructor() {
     this.revenueForm = new FormGroup({

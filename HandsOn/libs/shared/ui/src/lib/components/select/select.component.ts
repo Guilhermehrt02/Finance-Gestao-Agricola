@@ -9,6 +9,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { FloatLabel } from 'primeng/floatlabel';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'lib-select',
@@ -18,6 +19,7 @@ import { FloatLabel } from 'primeng/floatlabel';
     ReactiveFormsModule,
     SelectModule,
     FloatLabel,
+    MultiSelectModule
   ],
   templateUrl: './select.component.html',
   styleUrl: './select.component.css',
@@ -64,6 +66,8 @@ export class SelectComponent implements ControlValueAccessor {
     | 'lte'
     | 'gte' = 'contains';
   @Input() showClear = false;
+  @Input() multiple = false;
+  @Input() display: 'comma' | 'chip' = 'comma';
 
   onChange: any = () => undefined;
   onTouch: any = () => undefined;

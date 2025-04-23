@@ -16,8 +16,8 @@ namespace Core.Enums
             return paymentMethod switch
             {
                 PaymentMethod.Cash => "Cash",
-                PaymentMethod.CreditCard => "Credit Card",
-                PaymentMethod.DebitCard => "Debit Card",
+                PaymentMethod.CreditCard => "CreditCard",
+                PaymentMethod.DebitCard => "DebitCard",
                 PaymentMethod.Pix => "Pix",
                 PaymentMethod.Boleto => "Boleto",
                 _ => "Unknown",

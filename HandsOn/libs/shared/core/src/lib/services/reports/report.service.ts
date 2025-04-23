@@ -17,15 +17,22 @@ export class ReportService extends RequestService {
     };
   
     fetchReportData(reportInput: ReportInput) {
-      const formattedParams = {
-        startDate: this.formatDate(reportInput.startDate),
-        endDate: this.formatDate(reportInput.endDate),
-        ...(reportInput.category ? { category: reportInput.category } : {}),
-        ...(reportInput.source ? { source: reportInput.source } : {}),
-      };
-    
-      const params = new HttpParams({ fromObject: formattedParams });
+      let params = new HttpParams()
+        .set('startDate', this.formatDate(reportInput.startDate))
+        .set('endDate', this.formatDate(reportInput.endDate));
 
+      if (reportInput.category?.length) {
+        reportInput.category.forEach(cat => {
+          params = params.append('category', cat);
+        });
+      }
+
+      if (reportInput.source?.length) {
+        reportInput.source.forEach(src => {
+          params = params.append('source', src);
+        });
+      }
+    
       return this.httpClient
         .get<ReportData>(`${this.apiUrl}/report`, {
           ...this.httpOptionsBypassInterceptor,

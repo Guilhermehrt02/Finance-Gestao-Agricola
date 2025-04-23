@@ -1,34 +1,104 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { subMonths, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfYear,
+  endOfYear,
+  format
+} from 'date-fns';
 import { CommonModule } from '@angular/common';
+import {
+  SelectComponent,
+  SelectOption,
+} from '../../components/select/select.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { InputComponent } from '../../components/input/input.component';
+import { ExpenseCategoryLabels } from '@farm/core';
+import { RevenueSourceLabels } from '@farm/core';
+
+const expenseCategoryOptions: SelectOption[] = Object.entries(ExpenseCategoryLabels).map(
+  ([value, label]) => ({ value, label })
+);
+
+const revenueSourceOptions: SelectOption[] = Object.entries(RevenueSourceLabels).map(
+  ([value, label]) => ({ value, label })
+);
 
 @Component({
   selector: 'lib-date-range-filter',
-  imports: [CommonModule],
+  imports: [CommonModule, SelectComponent, ButtonComponent, InputComponent],
   templateUrl: './date-range-filter.component.html',
   styleUrls: ['./date-range-filter.component.css'],
   standalone: true,
 })
-export class DateRangeFilterComponent {
-  @Output() dateRangeChange = new EventEmitter<{ startDate: string; endDate: string }>();
+export class DateRangeFilterComponent implements OnInit {
+  @Output() dateRangeChange = new EventEmitter<{
+    startDate: string;
+    endDate: string;
+    category?: string[];
+    source?: string[];
+  }>();
+
+  expenseCategories = expenseCategoryOptions;
+  revenueSources = revenueSourceOptions;
 
   form: FormGroup;
   selectedOption = 'thisMonth';
   showCustomPicker = false;
 
-  constructor(/*private fb: FormBuilder*/) {
-    // const today = new Date();
-    // this.form = this.fb.group({
-    //   startDate: [this.formatDate(startOfMonth(today))],
-    //   endDate: [this.formatDate(endOfMonth(today))],
-    // });
-
-    // this.emitFormValues();
-
+  constructor() {
     this.form = new FormGroup({
-      startDate: new FormBuilder().control(this.formatDate(startOfMonth(new Date()))),
-      endDate: new FormBuilder().control(this.formatDate(endOfMonth(new Date()))),
+      startDate: new FormControl('', {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
+      endDate: new FormControl('', {
+        validators: [Validators.required],
+        updateOn: 'blur',
+      }),
+      category: new FormControl([], { validators: [], updateOn: 'blur' }),
+      source: new FormControl([], { validators: [], updateOn: 'blur' }),
+    });
+  }
+
+  get startDate(): FormControl {
+    return this.form.get('startDate') as FormControl;
+  }
+  get endDate(): FormControl {
+    return this.form.get('endDate') as FormControl;
+  }
+  get category(): FormControl {
+    return this.form.get('category') as FormControl;
+  }
+  get source(): FormControl {
+    return this.form.get('source') as FormControl;
+  }
+  get startDatePlaceholder(): string {
+    console.log(this.form.get('startDate')?.value);
+    return this.form.get('startDate')?.value
+      ? format(this.form.get('startDate')?.value, 'yyyy/MM/dd')
+      : 'Data Inicial';
+  }
+  
+  get endDatePlaceholder(): string {
+    return this.form.get('endDate')?.value
+      ? format(this.form.get('endDate')?.value, 'yyyy/MM/dd')
+      : 'Data Final';
+  }
+
+  ngOnInit() {
+    this.selectPredefined(this.selectedOption);
+    this.updateDataRange();
+  }
+
+  updateDataRange() {
+    this.form.patchValue({
+      startDate: this.formatDate(this.startDate.value) ?? '',
+      endDate: this.formatDate(this.endDate.value) ?? '',
+      category: this.category.value ?? [],
+      source: this.source.value ?? [],
     });
 
     this.emitFormValues();
@@ -37,38 +107,33 @@ export class DateRangeFilterComponent {
   selectPredefined(option: string) {
     this.selectedOption = option;
     this.showCustomPicker = false;
-
+  
     const today = new Date();
-    let startDate: Date;
-    let endDate: Date = today;
-
+    const formatDate = (date: Date) => format(date, 'yyyy-MM-dd');
+  
+    this.endDate.setValue(formatDate(today));
+  
     switch (option) {
       case 'thisMonth':
-        startDate = startOfMonth(today);
-        endDate = endOfMonth(today);
+        this.startDate.setValue(formatDate(startOfMonth(today)));
+        this.endDate.setValue(formatDate(endOfMonth(today)));
         break;
       case 'lastMonth':
-        startDate = startOfMonth(subMonths(today, 1));
-        endDate = endOfMonth(subMonths(today, 1));
+        this.startDate.setValue(formatDate(startOfMonth(subMonths(today, 1))));
+        this.endDate.setValue(formatDate(endOfMonth(subMonths(today, 1))));
         break;
       case 'thisYear':
-        startDate = startOfYear(today);
-        endDate = endOfYear(today);
+        this.startDate.setValue(formatDate(startOfYear(today)));
+        this.endDate.setValue(formatDate(endOfYear(today)));
         break;
       case 'last12Months':
-        startDate = subMonths(today, 12);
+        this.startDate.setValue(formatDate(subMonths(today, 12)));
         break;
       default:
         return;
     }
-
-    this.form.patchValue({
-      startDate: this.formatDate(startDate),
-      endDate: this.formatDate(endDate),
-    });
-
-    this.emitFormValues();
   }
+  
 
   toggleCustomPicker() {
     this.selectedOption = '';
@@ -76,18 +141,22 @@ export class DateRangeFilterComponent {
   }
 
   onCustomDateChange() {
-    this.emitFormValues();
+    this.updateDataRange();
   }
 
   private emitFormValues() {
-    const { startDate, endDate } = this.form.value;
+    const { startDate, endDate, category, source } = this.form.value;
     this.dateRangeChange.emit({
       startDate,
       endDate,
+      category: category?.map((c: SelectOption) => c.value),
+      source: source?.map((s: SelectOption) => s.value),
     });
   }
 
-  private formatDate(date: Date): string {
+  private formatDate(date: string | Date): string {
+    if (!date) return '';
+    if (typeof date === 'string') return date;
     return date.toISOString().split('T')[0];
   }
 }

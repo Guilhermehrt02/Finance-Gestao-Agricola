@@ -4,10 +4,10 @@ namespace Core.Enums
     {
         Infrastructure,
         Machine, 
-        input, 
-        defensive,
-        othersLongTerm,
-        othersShortTerm
+        Input, 
+        Defensive,
+        OthersLongTerm,
+        OthersShortTerm
     }
 
     public static class CategoryExtension
@@ -18,10 +18,10 @@ namespace Core.Enums
             {
                 Category.Infrastructure => "Infrastructure",
                 Category.Machine => "Machine",
-                Category.input => "input",
-                Category.defensive => "defensive",
-                Category.othersLongTerm => "othersLongTerm",
-                Category.othersShortTerm => "othersShortTerm",
+                Category.Input => "Input",
+                Category.Defensive => "Defensive",
+                Category.OthersLongTerm => "OthersLongTerm",
+                Category.OthersShortTerm => "OthersShortTerm",
                 _ => "Unknown",
             };
         }
@@ -32,17 +32,17 @@ namespace Core.Enums
             {
                 "Infrastructure" => Category.Infrastructure,
                 "Machine" => Category.Machine,
-                "input" => Category.input,
-                "defensive" => Category.defensive,
-                "othersLongTerm" => Category.othersLongTerm,
-                "othersShortTerm" => Category.othersShortTerm,
+                "Input" => Category.Input,
+                "Defensive" => Category.Defensive,
+                "OthersLongTerm" => Category.OthersLongTerm,
+                "OthersShortTerm" => Category.OthersShortTerm,
                 _ => Category.Infrastructure,
             };
         }
 
         public static Category[] GetValues()
         {
-            return [Category.Infrastructure, Category.Machine, Category.input, Category.defensive, Category.othersLongTerm, Category.othersShortTerm];
+            return [Category.Infrastructure, Category.Machine, Category.Input, Category.Defensive, Category.OthersLongTerm, Category.OthersShortTerm];
         }
     }
 }

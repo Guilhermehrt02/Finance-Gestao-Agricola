@@ -19,7 +19,10 @@
     >
       {{ label }}
     </label>
+
+    <!-- Dropdown padrão -->
     <p-select
+      *ngIf="!multiple"
       pInputText
       [id]="id"
       [name]="name"
@@ -67,6 +70,34 @@
         </div>
       </ng-template>
     </p-select>
+
+    <!-- Multiselect -->
+    <p-multiSelect
+      *ngIf="multiple"
+      [id]="id"
+      [name]="name"
+      [formControl]="control"
+      [options]="options"
+      [placeholder]="!floatLabel ? placeholder : ''"
+      [filter]="filter"
+      [filterBy]="filterBy"
+      [showClear]="showClear"
+      optionLabel="label"
+      class="w-full"
+    >
+      <ng-template let-item pTemplate="item">
+        <div class="flex items-center gap-2">
+          <img
+            *ngIf="item.image"
+            [src]="item.image"
+            [alt]="item.label"
+            style="width: 18px"
+          />
+          <div>{{ item.label }}</div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
+
     <small
       class="small-text"
       *ngIf="error || hint || hasError"

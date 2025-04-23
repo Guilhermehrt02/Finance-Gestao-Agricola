@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
-  ConfirmationService,
-  ExpenseFacade,
-  AuthFacade
+    ConfirmationService,
+    ExpenseFacade,
+    AuthFacade,
+    ExpenseCategoryLabels,
+    PaymentMethodLabels,
 } from '@farm/core';
 import { Router } from '@angular/router';
 import { Row, Action } from '@farm/ui';
@@ -55,6 +57,8 @@ export class ExpensesListComponentFacade {
     private mapExpenseToRow(expense: any): Row {
         return {
             ...expense,
+            category: ExpenseCategoryLabels[expense.category as keyof typeof ExpenseCategoryLabels] || expense.category,
+            paymentMethod: PaymentMethodLabels[expense.paymentMethod as keyof typeof PaymentMethodLabels] || expense.paymentMethod,
             actions: [
                 {
                     tooltip: 'Editar',

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
-  ConfirmationService,
-  RevenueFacade,
-  AuthFacade
+    ConfirmationService,
+    RevenueFacade,
+    AuthFacade,
+    RevenueSourceLabels,
 } from '@farm/core';
 import { Router } from '@angular/router';
 import { Row, Action } from '@farm/ui';
@@ -56,6 +57,7 @@ export class RevenueListComponentFacade {
     private mapRevenueToRow(revenue: any): Row {
         return {
             ...revenue,
+            source: RevenueSourceLabels[revenue.source as keyof typeof RevenueSourceLabels] || revenue.source,
             actions: [
                 {
                     tooltip: 'Editar',
