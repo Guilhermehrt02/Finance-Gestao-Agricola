@@ -50,10 +50,11 @@ export class MasterPageComponent implements OnInit, OnDestroy {
 
   loadMenu(userRole: string) {
     const menuItems: MenuItem[] = [];
-    
+
     menuItems.push({
       label: 'finance',
-      icon: 'pi pi-fw pi-money-bill',  
+      icon: 'pi pi-fw pi-money-bill',
+      styleClass: 'cursor-pointer',
       items: [
         {
           label: 'Relatórios',
@@ -69,7 +70,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
           label: 'Receitas',
           icon: 'pi pi-fw pi-arrow-down-left',
           routerLink: '/app/finance/revenues',
-        }
+        },
       ],
     });
 
@@ -77,6 +78,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
       menuItems.push({
         label: 'Usuários',
         icon: 'pi pi-fw pi-users',
+        styleClass: 'cursor-pointer',
         items: [
           {
             label: 'Cadastrar',

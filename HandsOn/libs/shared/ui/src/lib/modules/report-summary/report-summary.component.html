@@ -1,19 +1,19 @@
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
   <p-card header="Saldo">
-    <div class="text-blue-600 text-2xl font-bold">
-      {{ totalBalance | currency : 'BR' : 'symbol' }}
+    <div class="text-blue-600 text-2xl font-semibold">
+      {{ totalBalance | currency : 'BRL' : 'symbol' }}
     </div>
   </p-card>
 
   <p-card header="Receitas" *ngIf="!loading">
-    <div class="text-green-600 text-2xl font-bold">
-      {{ totalRevenues | currency : 'BR' : 'symbol' }}
+    <div class="text-green-600 text-2xl font-semibold">
+      {{ totalRevenues | currency : 'BRL' : 'symbol' }}
     </div>
   </p-card>
 
   <p-card header="Despesas" *ngIf="!loading">
-    <div class="text-red-600 text-2xl font-bold">
-      {{ totalExpenses | currency : 'BR' : 'symbol' }}
+    <div class="text-red-600 text-2xl font-semibold">
+      {{ totalExpenses | currency : 'BRL' : 'symbol' }}
     </div>
   </p-card>
 

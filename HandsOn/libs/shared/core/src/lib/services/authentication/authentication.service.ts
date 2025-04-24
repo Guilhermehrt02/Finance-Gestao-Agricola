@@ -19,8 +19,7 @@ export class AuthenticationService extends RequestService {
       email,
       password,
     };
-    console.log(this.apiUrl);
-    console.log(this.authApiUrl);
+    
     return this.httpClient
       .post<{
         token: string;

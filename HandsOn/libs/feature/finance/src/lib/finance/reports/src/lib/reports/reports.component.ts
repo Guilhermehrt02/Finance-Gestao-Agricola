@@ -84,10 +84,21 @@ export class ReportsComponent implements OnInit{
   transformToChartData(data: any[]): ChartData<'pie', number[], unknown> {
     return {
       labels: data.map(d => d.label),
-      datasets: [
+      datasets: [ 
         {
           data: data.map(d => d.amount),
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726', '#AB47BC', '#FF7043'],
+          backgroundColor: [
+            '#6BA368', // verde folha
+            '#C9D6B8', // verde claro oliva
+            '#FFD56B', // amarelo sol
+            '#D98555', // laranja terroso
+            '#A16E83', // vinho seco (remete à uva)
+            '#8C6A5D', // marrom rústico
+            '#B6C867', // verde trigo
+            '#FFE6A7', // bege palha
+            '#88AB75', // verde musgo
+            '#DAA06D', // cor de barro
+          ],
         },
       ],
     };

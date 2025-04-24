@@ -76,7 +76,7 @@ export class DateRangeFilterComponent implements OnInit {
     return this.form.get('source') as FormControl;
   }
   get startDatePlaceholder(): string {
-    console.log(this.form.get('startDate')?.value);
+    
     return this.form.get('startDate')?.value
       ? format(this.form.get('startDate')?.value, 'yyyy/MM/dd')
       : 'Data Inicial';
@@ -132,6 +132,8 @@ export class DateRangeFilterComponent implements OnInit {
       default:
         return;
     }
+
+    this.updateDataRange();
   }
   
 

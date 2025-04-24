@@ -34,43 +34,82 @@ export class ReportChartComponent implements OnInit {
     const commonLegend = {
       position: 'bottom' as const,
       labels: {
-        color: '#374151',
+        color: '#ffffff',
+        font: {
+          size: 14,
+          weight: 'bold' as const,
+        },
       },
     };
-
+  
+    const commonTitle = {
+      display: !!this.label,
+      text: this.label,
+      color: '#ffffff',
+      font: {
+        size: 18,
+        weight: 'bold' as const,
+      },
+      padding: {
+        top: 10,
+        bottom: 20,
+      },
+    };
+  
+    const commonTooltip = {
+      callbacks: {
+        label: (ctx: any) => {
+          const label = ctx.dataset?.label || ctx.label || '';
+          const value = ctx.raw;
+          return `${label}: R$ ${(+value).toLocaleString('pt-BR')}`;
+        },
+      },
+    };
+  
     const commonScales = {
       x: {
-        ticks: { color: '#374151' },
-        grid: { color: '#E5E7EB' },
+        ticks: { color: '#ffffff' },
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
       },
       y: {
-        ticks: { color: '#374151' },
-        grid: { color: '#E5E7EB' },
+        ticks: {
+          color: '#ffffff',
+          callback: (value: any) => `R$ ${(+value).toLocaleString('pt-BR')}`,
+        },
+        grid: { color: 'rgba(255, 255, 255, 0.1)' },
       },
     };
-
-    switch (type) {
-      case 'pie':
-      case 'doughnut':
-      case 'polarArea':
-        return {
-          plugins: { legend: commonLegend },
-          responsive: true,
-        };
-
-      case 'bar':
-      case 'line':
-      case 'radar':
-        return {
-          responsive: true,
-          plugins: { legend: commonLegend },
-          scales: commonScales,
-        };
-
-      default:
-        return {
-          responsive: true,
-        };
+  
+    if (type === 'pie' || type === 'doughnut' || type === 'polarArea') {
+      return {
+        responsive: true,
+        plugins: {
+          legend: commonLegend,
+          title: commonTitle,
+          tooltip: commonTooltip,
+        },
+      };
     }
+  
+    if (type === 'bar' || type === 'line' || type === 'radar') {
+      return {
+        responsive: true,
+        plugins: {
+          legend: commonLegend,
+          title: commonTitle,
+          tooltip: commonTooltip,
+        },
+        scales: commonScales,
+      };
+    }
+  
+    return {
+      responsive: true,
+      plugins: {
+        legend: commonLegend,
+        title: commonTitle,
+      },
+    };
   }
+  
 }
