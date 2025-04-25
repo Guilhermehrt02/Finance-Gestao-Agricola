@@ -46,6 +46,24 @@ namespace Application.Services
             var expenses = await _expenseRepository.GetAllByUserIdAndDateRangeAsync(userId, inputModel.StartDate, endDate, inputModel.Category);
             var revenues = await _revenueRepository.GetAllByUserIdAndDateRangeAsync(userId, inputModel.StartDate, endDate, inputModel.Source);
 
+            var expensesByCategory = expenses
+                .GroupBy(e => e.Category)
+                .Select(g => new ExpenseDataModel
+                {
+                    Category = g.Key.ToString(),
+                    Amount = g.Sum(e => e.Amount)
+                })
+                .ToList();
+
+            var revenuesBySource = revenues
+                .GroupBy(r => r.Source)
+                .Select(g => new RevenueDataModel
+                {
+                    Source = g.Key.ToString(),
+                    Amount = g.Sum(r => r.Amount)
+                })
+                .ToList();
+
             var totalExpenses = expenses.Sum(e => e.Amount);
             var totalRevenues = revenues.Sum(r => r.Amount);
             var totalBalance = CalculateTotalBalance(totalRevenues, totalExpenses);
@@ -57,8 +75,8 @@ namespace Application.Services
                 TotalExpenses = totalExpenses,
                 TotalRevenues = totalRevenues,
                 TotalBalance = totalBalance,
-                Expenses = [.. expenses.Select(ExpenseDataModel.FromEntity)],
-                Revenues = [.. revenues.Select(RevenueDataModel.FromEntity)],
+                Expenses = [.. expensesByCategory],
+                Revenues = [.. revenuesBySource],
                 RevenueAndExpenseByPeriod = revenueAndExpenseByPeriod
             };
 
