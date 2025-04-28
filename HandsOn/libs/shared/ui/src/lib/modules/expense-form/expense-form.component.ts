@@ -43,7 +43,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
   @Input() loading = false;
   @Input() submitLabel = 'Cadastrar';
 
-  @Output() expenseSubmit = new EventEmitter<Expense>();
+  @Output() expenseSubmit = new EventEmitter<any>();
 
   expenseForm: FormGroup;
 
@@ -90,8 +90,9 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
         ], 
         updateOn: 'blur' 
       }),
-      paymentMethod: new FormControl('', { validators: [], updateOn: 'blur' }),
-      receiptUrl: new FormControl('', { validators: [Validators.maxLength(500)], updateOn: 'blur' }),
+      paymentMethod: new FormControl(''),
+      receiptUrl: new FormControl(''),
+      receiptFile: new FormControl(''),
     });
   }
 
@@ -133,6 +134,10 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
     return this.expenseForm.get('receiptUrl') as FormControl;
   }
 
+  get receiptFile(): FormControl {
+    return this.expenseForm.get('receiptFile') as FormControl;
+  }
+
   updateExpenseData(): void {
     if (!this.expense) return;
   
@@ -152,7 +157,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       amount: this.expense.amount ?? 0,
       date: formattedDate,
       paymentMethod: selectedPaymentMethod ?? '',
-      receiptUrl: this.expense.receiptUrl ?? '',
+      receiptUrl: this.expense.receiptUrl ?? ''
     });
   }
 
@@ -161,7 +166,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       return this.expenseForm.markAllAsTouched();
     }
 
-    const expense: Expense = {
+    const formData = {
       id: this.expense?.id || '',
       description: this.description.value,
       category: this.category.value.value,
@@ -172,9 +177,10 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       userId: this.expense?.userId || '', 
       createdAt: this.expense?.createdAt || new Date(), 
       updatedAt: new Date(), 
+      receiptFile: this.receiptFile.value || null,
     };
 
-    this.expenseSubmit.emit(expense);
+    this.expenseSubmit.emit(formData);
   }
 
   getAmountErrorMessage(): string {

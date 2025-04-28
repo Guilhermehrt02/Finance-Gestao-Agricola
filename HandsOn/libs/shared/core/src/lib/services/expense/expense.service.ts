@@ -43,4 +43,5 @@ export class ExpenseService extends RequestService {
             .delete<void>(`${this.apiUrl}/expense/${id}`, this.httpOptions)
             .pipe(catchError(this.handleError));
     }
+
 }

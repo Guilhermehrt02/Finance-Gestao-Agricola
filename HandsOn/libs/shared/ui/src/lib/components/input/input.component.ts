@@ -40,7 +40,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() floatLabel = false;
   @Input() floatLabelType: 'in' | 'over' | 'on' = 'in';
-  @Input() type: 'text' | 'email' | 'search' | 'number' | 'date' = 'text';
+  @Input() type: 'text' | 'email' | 'search' | 'number' | 'date' | 'file' = 'text';
   @Input() control: FormControl = new FormControl();
   @Input() placeholder = '';
   @Input() disabled = false;
@@ -88,10 +88,13 @@ export class InputComponent implements ControlValueAccessor {
 
   onInput(event: any): void {
     let value = event.target.value;
-    
+
     if (this.type === 'number') {
       value = value ? parseFloat(value) : null;
+    } else if (this.type === 'file') {
+      value = event.target.files?.[0] || null; 
     }
+
     this.onChange(value);
   }
 

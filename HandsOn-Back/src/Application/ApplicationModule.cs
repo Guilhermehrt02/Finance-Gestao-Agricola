@@ -20,6 +20,7 @@ namespace Application
             services.AddScoped<IExpenseServices, ExpenseServices>();
             services.AddScoped<IRevenueServices, RevenueServices>();
             services.AddScoped<IReportServices, ReportServices>();
+            services.AddScoped<IUploadServices, UploadServices>();
             return services;
         }
     }
