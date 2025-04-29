@@ -52,6 +52,11 @@
       [minlength]="(type === 'text' || type === 'email' || type === 'search') ? minlength : null"
       [maxlength]="(type === 'text' || type === 'email' || type === 'search') ? maxlength : null"
       class="w-full"
+      [accept]="type === 'file' ? 'image/*,application/pdf' : null"
+      [multiple]="false"
+
+      (change)="onInput($event)"
+      (blur)="onBlur()"
     />
     <small
       class="small-text"

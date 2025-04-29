@@ -23,6 +23,8 @@ import {
 } from '../../components/select/select.component';
 import {
   Expense,
+  ExpenseCategoryLabels,
+  PaymentMethodLabels
 } from '@farm/core';
 
 @Component({
@@ -43,26 +45,18 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
   @Input() loading = false;
   @Input() submitLabel = 'Cadastrar';
 
-  @Output() expenseSubmit = new EventEmitter<Expense>();
+  @Output() expenseSubmit = new EventEmitter<any>();
 
   expenseForm: FormGroup;
+  receiptFile: File | null = null;
 
-  paymentMethods: SelectOption[] = [
-    { label: 'Dinheiro', value: 'Cash' },
-    { label: 'Cartão de Crédito', value: 'CreditCard' },
-    { label: 'Cartão de Débito', value: 'DebitCard' },
-    { label: 'Pix', value: 'Pix' },
-    { label: 'Boleto', value: 'Boleto' }
-  ];
-
-  categoryOptions: SelectOption[] = [
-    { label: 'Infraestrutura', value: 'Infraestruture' },
-    { label: 'Máquina', value: 'Machine' },
-    { label: 'Insumo', value: 'Input' },
-    { label: 'Defensivo', value: 'Defensive' },
-    { label: 'Outros - Longo Prazo', value: 'othersLongTerm' },
-    { label: 'Outros - Curto Prazo', value: 'othersShortTerm' },
-  ];
+  categoryOptions: SelectOption[] = Object.entries(ExpenseCategoryLabels).map(
+    ([value, label]) => ({ value, label })
+  );
+  
+  paymentMethods: SelectOption[] = Object.entries(PaymentMethodLabels).map(
+    ([value, label]) => ({ value, label })
+  );
 
   constructor() {
     this.expenseForm = new FormGroup({
@@ -90,8 +84,8 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
         ], 
         updateOn: 'blur' 
       }),
-      paymentMethod: new FormControl('', { validators: [], updateOn: 'blur' }),
-      receiptUrl: new FormControl('', { validators: [Validators.maxLength(500)], updateOn: 'blur' }),
+      paymentMethod: new FormControl(''),
+      receiptUrl: new FormControl('')
     });
   }
 
@@ -152,7 +146,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       amount: this.expense.amount ?? 0,
       date: formattedDate,
       paymentMethod: selectedPaymentMethod ?? '',
-      receiptUrl: this.expense.receiptUrl ?? '',
+      receiptUrl: this.expense.receiptUrl ?? ''
     });
   }
 
@@ -161,7 +155,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       return this.expenseForm.markAllAsTouched();
     }
 
-    const expense: Expense = {
+    const formData = {
       id: this.expense?.id || '',
       description: this.description.value,
       category: this.category.value.value,
@@ -172,9 +166,14 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       userId: this.expense?.userId || '', 
       createdAt: this.expense?.createdAt || new Date(), 
       updatedAt: new Date(), 
+      receiptFile: this.receiptFile || null,
     };
 
-    this.expenseSubmit.emit(expense);
+    this.expenseSubmit.emit(formData);
+  }
+
+  onFileSelected(file: File | null) {
+    this.receiptFile = file;
   }
 
   getAmountErrorMessage(): string {

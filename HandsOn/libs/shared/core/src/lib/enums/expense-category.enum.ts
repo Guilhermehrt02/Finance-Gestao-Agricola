@@ -3,8 +3,8 @@ export enum ExpenseCategory {
   Machine = 'Machine',
   Input = 'Input',
   Defensive = 'Defensive',
-  OthersLongTerm = 'othersLongTerm',
-  OthersShortTerm = 'othersShortTerm',
+  OthersLongTerm = 'OthersLongTerm',
+  OthersShortTerm = 'OthersShortTerm',
 }
 
 export const ExpenseCategoryLabels: Record<ExpenseCategory, string> = {

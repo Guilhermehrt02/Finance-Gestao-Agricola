@@ -50,7 +50,7 @@ export class ExpenseComponent implements OnInit, OnDestroy {
     this.facade.reset();
   }
 
-  onSubmit(expense: Expense) {
+  onSubmit(expense: any) {
     this.facade.submit(expense);
   }
 

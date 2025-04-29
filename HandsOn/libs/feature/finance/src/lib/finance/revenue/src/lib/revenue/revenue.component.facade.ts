@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
-  Revenue,
-  RevenueFacade,
-  ConfirmationService,
-  AuthenticationService,
+    Revenue,
+    RevenueFacade,
+    ConfirmationService,
+    AuthenticationService,
+    UploadFacade,
 } from '@farm/core';
 import { Router } from '@angular/router';
 
@@ -25,6 +26,7 @@ export class RevenueComponentFacade {
         private authenticationService: AuthenticationService,
         private revenueFacade: RevenueFacade,
         private confirmationService: ConfirmationService,
+        private uploadFacade: UploadFacade,
         private router: Router,
     ) {}
 
@@ -54,17 +56,45 @@ export class RevenueComponentFacade {
         this.revenueSubject.next(null);
     }
 
-    submit(revenue: Revenue) {
+    submit(revenue: any) {
+
         this.loadingSubject.next(true);
 
-        if (this.id) {
-            this.revenueFacade.updateRevenue(revenue).subscribe(() => {
-                this.loadingSubject.next(false);
+        const receiptFile = revenue.receiptFile;
+
+        const finalizeSubmit = (updatedRevenue: any) => {
+            if (this.id) {
+                this.revenueFacade.updateRevenue(updatedRevenue).subscribe(() => {
+                    this.loadingSubject.next(false);
+                    this.router.navigate(['/app/finance/revenues']);
+                });
+            } else {
+                this.revenueFacade.createRevenue(updatedRevenue).subscribe(() => {
+                    this.loadingSubject.next(false);
+                    this.router.navigate(['/app/finance/revenues']);
+                });
+            }
+        }
+
+        if (receiptFile) {
+            this.uploadFacade.uploadFile(receiptFile).subscribe({
+                next: (uploadResponse) => {
+                    const receiptUrl = uploadResponse.Path;
+
+                    const updatedRevenue = {
+                        ...revenue,
+                        receiptUrl,
+                        receiptFile: null,
+                    };
+
+                    finalizeSubmit(updatedRevenue);
+                },
+                error: () => {
+                    this.loadingSubject.next(false);
+                },
             });
         } else {
-            this.revenueFacade.createRevenue(revenue).subscribe(() => {
-                this.loadingSubject.next(false);
-            });
+            finalizeSubmit(revenue);
         }
     }
 
