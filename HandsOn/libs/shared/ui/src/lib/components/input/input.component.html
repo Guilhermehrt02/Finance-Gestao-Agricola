@@ -54,6 +54,9 @@
       class="w-full"
       [accept]="type === 'file' ? 'image/*,application/pdf' : null"
       [multiple]="false"
+
+      (change)="onInput($event)"
+      (blur)="onBlur()"
     />
     <small
       class="small-text"

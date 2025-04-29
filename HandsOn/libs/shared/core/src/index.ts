@@ -31,6 +31,7 @@ export * from './lib/facades/user.facade';
 export * from './lib/facades/expense.facade';
 export * from './lib/facades/revenue.facade';
 export * from './lib/facades/report.facade';
+export * from './lib/facades/upload.facade';
 
 // guards
 export * from './lib/guards/authenticated/authenticated.guard';

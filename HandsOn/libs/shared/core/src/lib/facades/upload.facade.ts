@@ -15,16 +15,19 @@ export class UploadFacade {
 
   constructor(private uploadService: UploadService) {}
 
-  uploadFile(file: File): Observable<string> {
+  uploadFile(file: File): Observable<any> {
     this.loadingSubject.next(true);
 
     return this.uploadService.uploadFile(file).pipe(
       tap({
-        next: (path) => {
+        next: (reponse) => {
+          const path = reponse.path;
+          console.log('Upload sucesso:', path);
           this.uploadSubject.next(path);
           this.loadingSubject.next(false);
         },
-        error: () => {
+        error: (error) => {
+          console.error('Erro no upload:', error);
           this.loadingSubject.next(false);
         },
       })

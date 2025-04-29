@@ -62,7 +62,7 @@
       [id]="'receiptFile'"
       [label]="'Comprovante (Arquivo)'"
       [type]="'file'"
-      [control]="receiptFile"
+      (fileSelected)="onFileSelected($event)"
       class="w-full"
     />
   </div>

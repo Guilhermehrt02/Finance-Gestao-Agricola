@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
@@ -63,6 +63,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input() loading = false;
   @Input() step: number | null = null;
 
+  @Output() fileSelected = new EventEmitter<File | null>();
+
   onChange: any = () => undefined;
   onTouch: any = () => undefined;
 
@@ -87,16 +89,22 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   onInput(event: any): void {
+
     let value = event.target.value;
 
-    if (this.type === 'number') {
+    if (this.type === 'number') 
+      {
       value = value ? parseFloat(value) : null;
-    } else if (this.type === 'file') {
-      value = event.target.files?.[0] || null; 
+    } else if (this.type === 'file') 
+      {
+      const file = event.target.files?.[0] || null;
+
+      this.fileSelected.emit(file);
     }
 
     this.onChange(value);
   }
+  
 
   onBlur(): void {
     this.onTouch();

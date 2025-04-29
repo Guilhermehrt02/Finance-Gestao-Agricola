@@ -23,6 +23,8 @@ import {
 } from '../../components/select/select.component';
 import {
   Expense,
+  ExpenseCategoryLabels,
+  PaymentMethodLabels
 } from '@farm/core';
 
 @Component({
@@ -46,23 +48,15 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
   @Output() expenseSubmit = new EventEmitter<any>();
 
   expenseForm: FormGroup;
+  receiptFile: File | null = null;
 
-  paymentMethods: SelectOption[] = [
-    { label: 'Dinheiro', value: 'Cash' },
-    { label: 'Cartão de Crédito', value: 'CreditCard' },
-    { label: 'Cartão de Débito', value: 'DebitCard' },
-    { label: 'Pix', value: 'Pix' },
-    { label: 'Boleto', value: 'Boleto' }
-  ];
-
-  categoryOptions: SelectOption[] = [
-    { label: 'Infraestrutura', value: 'Infraestruture' },
-    { label: 'Máquina', value: 'Machine' },
-    { label: 'Insumo', value: 'Input' },
-    { label: 'Defensivo', value: 'Defensive' },
-    { label: 'Outros - Longo Prazo', value: 'othersLongTerm' },
-    { label: 'Outros - Curto Prazo', value: 'othersShortTerm' },
-  ];
+  categoryOptions: SelectOption[] = Object.entries(ExpenseCategoryLabels).map(
+    ([value, label]) => ({ value, label })
+  );
+  
+  paymentMethods: SelectOption[] = Object.entries(PaymentMethodLabels).map(
+    ([value, label]) => ({ value, label })
+  );
 
   constructor() {
     this.expenseForm = new FormGroup({
@@ -91,8 +85,7 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
         updateOn: 'blur' 
       }),
       paymentMethod: new FormControl(''),
-      receiptUrl: new FormControl(''),
-      receiptFile: new FormControl(''),
+      receiptUrl: new FormControl('')
     });
   }
 
@@ -134,10 +127,6 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
     return this.expenseForm.get('receiptUrl') as FormControl;
   }
 
-  get receiptFile(): FormControl {
-    return this.expenseForm.get('receiptFile') as FormControl;
-  }
-
   updateExpenseData(): void {
     if (!this.expense) return;
   
@@ -177,10 +166,14 @@ export class ExpenseFormComponent implements OnInit, OnChanges {
       userId: this.expense?.userId || '', 
       createdAt: this.expense?.createdAt || new Date(), 
       updatedAt: new Date(), 
-      receiptFile: this.receiptFile.value || null,
+      receiptFile: this.receiptFile || null,
     };
 
     this.expenseSubmit.emit(formData);
+  }
+
+  onFileSelected(file: File | null) {
+    this.receiptFile = file;
   }
 
   getAmountErrorMessage(): string {

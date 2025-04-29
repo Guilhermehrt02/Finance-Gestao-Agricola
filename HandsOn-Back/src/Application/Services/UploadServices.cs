@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.Text.Json;
 
 namespace Application.Services
 {
@@ -32,8 +33,9 @@ namespace Application.Services
             }
 
             var relativePath = Path.Combine("uploads", fileName).Replace("\\", "/");
+
             
-            return relativePath;
+            return JsonSerializer.Serialize(new { Path = relativePath });
         }
     }
 }
