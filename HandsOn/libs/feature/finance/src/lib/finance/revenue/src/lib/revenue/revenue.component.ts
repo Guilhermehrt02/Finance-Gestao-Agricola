@@ -32,7 +32,6 @@ export class RevenueComponent implements OnInit, OnDestroy{
     if (!this.id) {
       return;
     }
-    // If id is present, we are in edit mode
     this.title = 'Editar Receita';
     this.description = 'Preencha os campos abaixo para editar a receita';
     this.submitLabel = 'Editar';
@@ -54,7 +53,7 @@ export class RevenueComponent implements OnInit, OnDestroy{
     this.facade.reset();
   }
 
-  onSubmit(revenue: Revenue) {
+  onSubmit(revenue: any) {
     this.facade.submit(revenue);
   }
 }

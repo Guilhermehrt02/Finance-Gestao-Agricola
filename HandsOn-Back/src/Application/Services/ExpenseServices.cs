@@ -15,7 +15,6 @@ namespace Application.Services
 
         public async Task<IEnumerable<ExpenseViewModel>> GetAllByUserIdAsync(ClaimsPrincipal actionUser)
         {
-            // Get the user id from the claims (token)
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
 
             var expenses = await _expenseRepository.GetAllByUserIdAsync(userId);
@@ -25,7 +24,6 @@ namespace Application.Services
 
         public async Task<ExpenseViewModel> GetByIdAsync(ClaimsPrincipal actionUser, Guid id)
         {
-            // Get the user id from the claims (token)
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
 
             var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");

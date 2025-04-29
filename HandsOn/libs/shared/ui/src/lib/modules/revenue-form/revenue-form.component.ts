@@ -44,9 +44,10 @@ export class RevenueFormComponent implements OnInit, OnChanges {
   @Input() loading = false;
   @Input() submitLabel = 'Cadastrar';
 
-  @Output() revenueSubmit = new EventEmitter<Revenue>();
+  @Output() revenueSubmit = new EventEmitter<any>();
 
   revenueForm: FormGroup;
+  receiptFile: File | null = null;
 
   sourceOptions: SelectOption[] = Object.entries(RevenueSourceLabels).map(
     ([value, label]) => ({ value, label })
@@ -138,7 +139,7 @@ export class RevenueFormComponent implements OnInit, OnChanges {
       return this.revenueForm.markAllAsTouched();
     }
 
-    const revenue: Revenue = {
+    const formData = {
       id: this.revenue?.id || '',
       description: this.description.value,
       source: this.source.value.value,
@@ -148,9 +149,14 @@ export class RevenueFormComponent implements OnInit, OnChanges {
       userId: this.revenue?.userId || '',
       createdAt: this.revenue?.createdAt || new Date(),
       updatedAt: new Date(),
+      receiptFile: this.receiptFile || null,
     };
     
-    this.revenueSubmit.emit(revenue);
+    this.revenueSubmit.emit(formData);
+  }
+
+  onFileSelected(file: File | null) {
+    this.receiptFile = file;
   }
 
   private formatDateToInput(date: string | Date): string {

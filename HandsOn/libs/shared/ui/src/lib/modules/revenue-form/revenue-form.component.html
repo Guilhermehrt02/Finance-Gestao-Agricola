@@ -48,13 +48,10 @@
     />
 
     <lib-input
-      [id]="'receiptUrl'"
-      [label]="'Comprovante (URL)'"
-      [type]="'text'"
-      [placeholder]="'ex. https://meus-comprovantes.com/123'"
-      [fluid]="true"
-      [maxlength]="500"
-      [control]="receiptUrl"
+      [id]="'receiptFile'"
+      [label]="'Comprovante (Arquivo)'"
+      [type]="'file'"
+      (fileSelected)="onFileSelected($event)"
       class="w-full"
     ></lib-input>
   </div>
