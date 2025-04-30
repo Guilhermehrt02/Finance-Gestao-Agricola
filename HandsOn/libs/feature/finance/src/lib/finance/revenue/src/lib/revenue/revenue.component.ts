@@ -27,11 +27,15 @@ export class RevenueComponent implements OnInit, OnDestroy{
   ) {}
 
   ngOnInit() {
+    this.facade.reset();
+
     this.id = this.route.snapshot.paramMap.get('id') || undefined;
 
     if (!this.id) {
+      // this.facade.reset();
       return;
     }
+
     this.title = 'Editar Receita';
     this.description = 'Preencha os campos abaixo para editar a receita';
     this.submitLabel = 'Editar';

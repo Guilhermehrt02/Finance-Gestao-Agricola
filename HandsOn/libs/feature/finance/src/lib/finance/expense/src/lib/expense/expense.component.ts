@@ -25,7 +25,10 @@ export class ExpenseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.facade.reset();
+
     this.id = this.route.snapshot.paramMap.get('id') || undefined;
+    
     if (!this.id) {
       return;
     }

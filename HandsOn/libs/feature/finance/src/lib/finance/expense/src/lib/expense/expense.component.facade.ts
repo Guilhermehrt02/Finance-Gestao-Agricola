@@ -57,24 +57,17 @@ export class ExpenseComponentFacade {
 
   reset() {
     this.expenseSubject.next(null);
+    this.id = undefined;
   }
 
     submit(expense: any) {
-        this.loadingSubject.next(true);
-        
         const receiptFile = expense.receiptFile;
 
         const finalizeSubmit = (updatedExpense: any) => {
             if (this.id) {
-            this.expenseFacade.updateExpense(updatedExpense).subscribe(() => {
-                this.loadingSubject.next(false);
-                this.router.navigate(['/app/finance/expenses']);
-            });
+              this.updateExpense(updatedExpense);
             } else {
-            this.expenseFacade.createExpense(updatedExpense).subscribe(() => {
-                this.loadingSubject.next(false);
-                this.router.navigate(['/app/finance/expenses']);
-            });
+              this.addExpense(updatedExpense);
             }
         };
 

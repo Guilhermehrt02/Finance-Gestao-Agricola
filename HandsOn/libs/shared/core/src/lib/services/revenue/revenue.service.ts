@@ -16,7 +16,7 @@ export class RevenueService extends RequestService {
 
   getAllRevenues() {
     return this.httpClient
-      .get<Revenue[]>(`${this.apiUrl}/revenue`, this.httpOptionsBypassInterceptor)
+      .get<Revenue[]>(`${this.apiUrl}/revenue`, this.httpOptionsBypassInterceptor) 
       .pipe(catchError(this.handleError));
   }
 

@@ -57,24 +57,17 @@ export class RevenueComponentFacade {
 
   reset() {
     this.revenueSubject.next(null);
+    this.id = undefined;
   }
 
   submit(revenue: any) {
-    this.loadingSubject.next(true);
-    
     const receiptFile = revenue.receiptFile;
 
     const finalizeSubmit = (updatedRevenue: any) => {
       if (this.id) {
-        this.revenueFacade.updateRevenue(updatedRevenue).subscribe(() => {
-          this.loadingSubject.next(false);
-          this.router.navigate(['/app/finance/revenues']);
-        });
+        this.updateRevenue(updatedRevenue);
       } else {
-        this.revenueFacade.createRevenue(updatedRevenue).subscribe(() => {
-          this.loadingSubject.next(false);
-          this.router.navigate(['/app/finance/revenues']);
-        });
+        this.addRevenue(updatedRevenue);
       }
     };
 
