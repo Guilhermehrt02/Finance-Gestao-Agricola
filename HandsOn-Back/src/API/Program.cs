@@ -17,6 +17,7 @@ builder.Services.AddOpenApi();
 // Add services to the container.
 builder.Services.AddControllers(options => options.Filters.Add<ErrorHandlingFilterAtribute>());
 
+builder.Services.AddHttpContextAccessor();
 // Cors
 builder.Services.AddCors(options =>
 {

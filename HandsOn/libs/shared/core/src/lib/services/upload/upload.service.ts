@@ -12,7 +12,7 @@ export class UploadService extends RequestService {
         formData.append('file', file);
 
         return this.httpClient
-          .post<{ path: string }>(`${this.apiUrl}/upload/file`, formData)
+          .post<{ FileUrl : string }>(`${this.apiUrl}/upload/file`, formData)
           .pipe(
             catchError((error) => {
               console.error('Erro no UploadService:', error);

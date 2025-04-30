@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Repositories;
-using Application.ViewModels;
+using Application.ViewModels.ExpenseModels;
 using Application.Exceptions;
 using Application.Validators;
 using Application.InputModels.ExpenseModels;
@@ -9,9 +9,10 @@ using Core.Enums;
 
 namespace Application.Services
 {
-    public class ExpenseServices(IExpenseRepository expenseRepository) : IExpenseServices
+    public class ExpenseServices(IExpenseRepository expenseRepository, IUploadServices uploadServices) : IExpenseServices
     {
         private readonly IExpenseRepository _expenseRepository = expenseRepository;
+        private readonly IUploadServices _uploadServices = uploadServices;
 
         public async Task<IEnumerable<ExpenseViewModel>> GetAllByUserIdAsync(ClaimsPrincipal actionUser)
         {
@@ -59,6 +60,11 @@ namespace Application.Services
 
             var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");
 
+            if (!string.IsNullOrEmpty(inputModel.ReceiptUrl) && !string.IsNullOrEmpty(expense.ReceiptUrl) && inputModel.ReceiptUrl != expense.ReceiptUrl)
+            {
+                await _uploadServices.DeleteFileAsync(expense.ReceiptUrl);
+            }
+            
             expense.Update(
                 inputModel.Description,
                 inputModel.Category,
@@ -77,6 +83,11 @@ namespace Application.Services
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
 
             var expense = await _expenseRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Expense not found");
+
+            if (!string.IsNullOrEmpty(expense.ReceiptUrl))
+            {
+                await _uploadServices.DeleteFileAsync(expense.ReceiptUrl);
+            }
             
             await _expenseRepository.DeleteAsync(expense);
             

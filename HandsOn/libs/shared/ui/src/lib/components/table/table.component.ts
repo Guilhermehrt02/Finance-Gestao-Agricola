@@ -235,7 +235,8 @@ export interface Column {
     | 'currency'
     | 'number'
     | 'boolean'
-    | 'action';
+    | 'action'
+    | 'file';
   sortable?: boolean;
   filterable?: boolean;
   visible?: boolean;

@@ -8,5 +8,5 @@ export interface Expense {
     createdAt: Date;
     updatedAt: Date;
     paymentMethod?: string | number;
-    receiptUrl?: string;
+    receiptUrl: string;
 }

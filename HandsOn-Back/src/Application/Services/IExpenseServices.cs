@@ -1,4 +1,4 @@
-using Application.ViewModels;
+using Application.ViewModels.ExpenseModels;
 using Application.InputModels.ExpenseModels;
 using System.Security.Claims;
 
