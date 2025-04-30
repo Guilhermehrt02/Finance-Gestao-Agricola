@@ -78,7 +78,7 @@ export class RevenueFormComponent implements OnInit, OnChanges {
         ], 
         updateOn: 'blur' 
       }),
-      receiptUrl: new FormControl('', { validators: [Validators.maxLength(500)], updateOn: 'blur' }),
+      receiptUrl: new FormControl(''),
     });
   }
 

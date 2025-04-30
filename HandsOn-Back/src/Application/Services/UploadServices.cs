@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Application.Services
 {
@@ -15,13 +14,13 @@ namespace Application.Services
             {
                 throw new ArgumentException("File is empty");
             }
-            if (file.Length > 5 * 1024 * 1024) 
+            if (file.Length > 5 * 1024 * 1024)
             {
                 throw new ArgumentException("File size exceeds the limit of 5 MB");
             }
 
             var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath ?? "wwwroot", "uploads");
-            
+
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
@@ -35,11 +34,14 @@ namespace Application.Services
 
             return Path.Combine("uploads", fileName).Replace("\\", "/");
         }
-        
+
 
         public Task DeleteFileAsync(string relativePath)
         {
-            var fullPath = Path.Combine(_webHostEnvironment.WebRootPath ?? "wwwroot", relativePath);
+            var uri = new Uri(relativePath);
+            var cleanRelativePath = uri.AbsolutePath.TrimStart('/');
+
+            var fullPath = Path.Combine(_webHostEnvironment.WebRootPath ?? "wwwroot", cleanRelativePath);
 
             if (File.Exists(fullPath))
             {

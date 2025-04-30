@@ -9,9 +9,10 @@ using Core.Enums;
 
 namespace Application.Services
 {
-    public class RevenueServices(IRevenueRepository revenueRepository) : IRevenueServices
+    public class RevenueServices(IRevenueRepository revenueRepository, IUploadServices uploadServices) : IRevenueServices
     {
         private readonly IRevenueRepository _revenueRepository = revenueRepository;
+        private readonly IUploadServices _uploadServices = uploadServices;
 
         public async Task<IEnumerable<RevenueViewModel>> GetAllByUserIdAsync(ClaimsPrincipal actionUser)
         {
@@ -57,6 +58,11 @@ namespace Application.Services
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
             var revenue = await _revenueRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Revenue not found");
 
+            if (!string.IsNullOrEmpty(inputModel.ReceiptUrl) && !string.IsNullOrEmpty(revenue.ReceiptUrl) && inputModel.ReceiptUrl != revenue.ReceiptUrl)
+            {
+                await _uploadServices.DeleteFileAsync(revenue.ReceiptUrl);
+            }
+
             revenue.Update(
                 inputModel.Description,
                 inputModel.Source,
@@ -73,6 +79,11 @@ namespace Application.Services
         {
             var userId = Guid.Parse(actionUser.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? throw new NotFoundException("User not found"));
             var revenue = await _revenueRepository.GetByIdAsync(userId, id) ?? throw new NotFoundException("Revenue not found");
+
+            if (!string.IsNullOrEmpty(revenue.ReceiptUrl))
+            {
+                await _uploadServices.DeleteFileAsync(revenue.ReceiptUrl);
+            }
 
             await _revenueRepository.DeleteAsync(revenue);
             return RevenueViewModel.FromEntity(revenue);

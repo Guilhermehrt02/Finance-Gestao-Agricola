@@ -99,7 +99,7 @@ const columns: Column[] = [
   {
     field: 'receiptUrl',
     header: 'Comprovante',
-    type: 'text',
+    type: 'file',
     sortable: false,
     filterable: true,
     visible: true,
