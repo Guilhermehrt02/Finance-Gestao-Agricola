@@ -21,8 +21,15 @@ namespace API.Controllers
         public async Task<IActionResult> UploadFile([FromForm] string? description, [FromForm] DateTime? clientDate, IFormFile file)
         {
 
-            var fileUrl = await _uploadServices.UploadFileAsync(file);
-            return Ok(fileUrl);
+            var relativePath = await _uploadServices.UploadFileAsync(file);
+
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var fileUrl = $"{baseUrl}/{relativePath}";
+
+            return Ok(new
+            {
+                FileUrl = fileUrl,
+            });
         }
     }
 }

@@ -81,14 +81,14 @@ export class ExpenseComponentFacade {
         if (receiptFile) {
             this.uploadFacade.uploadFile(receiptFile).subscribe({
             next: (uploadResponse) => {
-                const receiptUrl = uploadResponse.Path;
+                const receiptUrl = uploadResponse.fileUrl;
 
                 const updatedExpense = {
                 ...expense,
                 receiptUrl,
                 receiptFile: null,
                 };
-
+                
                 finalizeSubmit(updatedExpense);
             },
             error: () => {

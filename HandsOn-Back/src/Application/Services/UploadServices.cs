@@ -1,12 +1,13 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
-using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Application.Services
 {
-    public class UploadServices(IWebHostEnvironment webHostEnvironment) : IUploadServices
+    public class UploadServices(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor) : IUploadServices
     {
         private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         public async Task<string> UploadFileAsync(IFormFile file)
         {
@@ -14,12 +15,12 @@ namespace Application.Services
             {
                 throw new ArgumentException("File is empty");
             }
-            if (file.Length > 5 * 1024 * 1024) // 5 MB limit
+            if (file.Length > 5 * 1024 * 1024) 
             {
                 throw new ArgumentException("File size exceeds the limit of 5 MB");
             }
 
-            var uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath ?? "wwwroot", "uploads");
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath ?? "wwwroot", "uploads");
             
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
@@ -32,10 +33,20 @@ namespace Application.Services
                 await file.CopyToAsync(stream);
             }
 
-            var relativePath = Path.Combine("uploads", fileName).Replace("\\", "/");
+            return Path.Combine("uploads", fileName).Replace("\\", "/");
+        }
+        
 
-            
-            return JsonSerializer.Serialize(new { Path = relativePath });
+        public Task DeleteFileAsync(string relativePath)
+        {
+            var fullPath = Path.Combine(_webHostEnvironment.WebRootPath ?? "wwwroot", relativePath);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

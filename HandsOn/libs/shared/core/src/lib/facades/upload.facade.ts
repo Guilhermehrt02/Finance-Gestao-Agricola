@@ -21,9 +21,9 @@ export class UploadFacade {
     return this.uploadService.uploadFile(file).pipe(
       tap({
         next: (reponse) => {
-          const path = reponse.path;
-          console.log('Upload sucesso:', path);
-          this.uploadSubject.next(path);
+          const fileUrl = reponse.FileUrl;
+          console.log('Upload sucesso:', fileUrl);
+          this.uploadSubject.next(fileUrl);
           this.loadingSubject.next(false);
         },
         error: (error) => {

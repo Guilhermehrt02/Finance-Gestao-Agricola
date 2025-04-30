@@ -1,6 +1,6 @@
 using Core.Entities;
 using Core.Repositories;
-using Application.ViewModels;
+using Application.ViewModels.ExpenseModels;
 using Application.Exceptions;
 using Application.Validators;
 using Application.InputModels.ExpenseModels;
