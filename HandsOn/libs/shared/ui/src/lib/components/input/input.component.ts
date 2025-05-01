@@ -146,4 +146,5 @@ const errorMessages = {
   maxlength: '{0} deve ter no máximo {max} caracteres',
   phoneExists: 'Telefone já cadastrado',
   futureDate: '{0} não pode ser uma data futura',
+  dateRangeInvalid: 'A data final não pode ser anterior à data inicial',
 };

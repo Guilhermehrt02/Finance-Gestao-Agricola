@@ -25,7 +25,7 @@ export class ReportChartComponent implements OnInit {
   @Input() className = 'w-full max-w-xl h-80 mx-auto';
 
   ngOnInit(): void {
-    Chart.register(...registerables); 
+    Chart.register(...registerables);
 
     this.options = this.getChartOptions(this.type);
   }
@@ -41,7 +41,7 @@ export class ReportChartComponent implements OnInit {
         },
       },
     };
-  
+
     const commonTitle = {
       display: !!this.label,
       text: this.label,
@@ -55,7 +55,7 @@ export class ReportChartComponent implements OnInit {
         bottom: 20,
       },
     };
-  
+
     const commonTooltip = {
       callbacks: {
         label: (ctx: any) => {
@@ -65,7 +65,7 @@ export class ReportChartComponent implements OnInit {
         },
       },
     };
-  
+
     const commonScales = {
       x: {
         ticks: { color: '#ffffff' },
@@ -79,7 +79,7 @@ export class ReportChartComponent implements OnInit {
         grid: { color: 'rgba(255, 255, 255, 0.1)' },
       },
     };
-  
+
     if (type === 'pie' || type === 'doughnut' || type === 'polarArea') {
       return {
         responsive: true,
@@ -90,7 +90,7 @@ export class ReportChartComponent implements OnInit {
         },
       };
     }
-  
+
     if (type === 'bar' || type === 'line' || type === 'radar') {
       return {
         responsive: true,
@@ -102,7 +102,7 @@ export class ReportChartComponent implements OnInit {
         scales: commonScales,
       };
     }
-  
+
     return {
       responsive: true,
       plugins: {
@@ -111,5 +111,12 @@ export class ReportChartComponent implements OnInit {
       },
     };
   }
-  
+
+  hasData(): boolean {
+    return (
+      this.data !== null &&
+      this.data.datasets &&
+      this.data.datasets[0]?.data?.some((value) => typeof value === 'number' && value > 0)
+    );
+  }
 }

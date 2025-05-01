@@ -8,15 +8,23 @@
   </label>
 
   <div [ngClass]="className" class="w-full h-full">
-    <p-chart
-      id="chart"
-      [type]="type"
-      [data]="data"
-      [options]="options"
-      [responsive]="true"
-      *ngIf="!loading"
-      styleClass="w-full h-full"
-    ></p-chart>
+    <ng-container *ngIf="hasData(); else noDataTemplate">
+      <p-chart
+        id="chart"
+        [type]="type"
+        [data]="data"
+        [options]="options"
+        [responsive]="true"
+        *ngIf="!loading"
+        styleClass="w-full h-full"
+      ></p-chart>
+    </ng-container>
+
+    <ng-template #noDataTemplate>
+      <p *ngIf="!loading" class="text-center text-sm text-gray-400">
+        Nenhum dado disponível para exibir.
+      </p>
+    </ng-template>
 
     <p *ngIf="loading" class="text-center text-sm text-gray-400">
       Carregando gráfico...

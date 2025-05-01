@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-  <p-card header="Saldo">
+  <p-card header="Saldo" *ngIf="!loading">
     <div class="text-blue-600 text-2xl font-semibold">
       {{ totalBalance | currency : 'BRL' : 'symbol' }}
     </div>
@@ -17,7 +17,7 @@
     </div>
   </p-card>
 
-  <p *ngIf="loading" class="text-center text-sm text-gray-400">
+  <p *ngIf="loading" class="text-center text-sm text-gray-400 grid col-span-3">
     Carregando sumário...
   </p>
 </div>

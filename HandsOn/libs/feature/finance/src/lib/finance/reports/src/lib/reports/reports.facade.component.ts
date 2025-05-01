@@ -38,7 +38,7 @@ export class ReportComponentFacade {
           },
           (error) => {
             const code = error.code;
-            if (code === 400 || code === 404) this.router.navigate(['/404']);
+            // if (code === 400 || code === 404) this.router.navigate(['/404']);
           },
         ),
       )

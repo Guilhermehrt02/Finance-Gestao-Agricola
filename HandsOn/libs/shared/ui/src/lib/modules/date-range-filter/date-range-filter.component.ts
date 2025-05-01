@@ -1,12 +1,18 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import {
   subMonths,
   startOfMonth,
   endOfMonth,
   startOfYear,
   endOfYear,
-  format
+  format,
 } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import {
@@ -18,13 +24,13 @@ import { InputComponent } from '../../components/input/input.component';
 import { ExpenseCategoryLabels } from '@farm/core';
 import { RevenueSourceLabels } from '@farm/core';
 
-const expenseCategoryOptions: SelectOption[] = Object.entries(ExpenseCategoryLabels).map(
-  ([value, label]) => ({ value, label })
-);
+const expenseCategoryOptions: SelectOption[] = Object.entries(
+  ExpenseCategoryLabels,
+).map(([value, label]) => ({ value, label }));
 
-const revenueSourceOptions: SelectOption[] = Object.entries(RevenueSourceLabels).map(
-  ([value, label]) => ({ value, label })
-);
+const revenueSourceOptions: SelectOption[] = Object.entries(
+  RevenueSourceLabels,
+).map(([value, label]) => ({ value, label }));
 
 @Component({
   selector: 'lib-date-range-filter',
@@ -49,18 +55,23 @@ export class DateRangeFilterComponent implements OnInit {
   showCustomPicker = false;
 
   constructor() {
-    this.form = new FormGroup({
-      startDate: new FormControl('', {
-        validators: [Validators.required],
-        updateOn: 'blur',
-      }),
-      endDate: new FormControl('', {
-        validators: [Validators.required],
-        updateOn: 'blur',
-      }),
-      category: new FormControl([], { validators: [], updateOn: 'blur' }),
-      source: new FormControl([], { validators: [], updateOn: 'blur' }),
-    });
+    this.form = new FormGroup(
+      {
+        startDate: new FormControl('', {
+          validators: [Validators.required],
+          updateOn: 'blur',
+        }),
+        endDate: new FormControl('', {
+          validators: [Validators.required, this.dateRangeValidator],
+          updateOn: 'blur',
+        }),
+        category: new FormControl([], { validators: [], updateOn: 'blur' }),
+        source: new FormControl([], { validators: [], updateOn: 'blur' }),
+      },
+      {
+        validators: this.dateRangeValidator.bind(this),
+      },
+    );
   }
 
   get startDate(): FormControl {
@@ -76,12 +87,11 @@ export class DateRangeFilterComponent implements OnInit {
     return this.form.get('source') as FormControl;
   }
   get startDatePlaceholder(): string {
-    
     return this.form.get('startDate')?.value
       ? format(this.form.get('startDate')?.value, 'yyyy/MM/dd')
       : 'Data Inicial';
   }
-  
+
   get endDatePlaceholder(): string {
     return this.form.get('endDate')?.value
       ? format(this.form.get('endDate')?.value, 'yyyy/MM/dd')
@@ -107,12 +117,12 @@ export class DateRangeFilterComponent implements OnInit {
   selectPredefined(option: string) {
     this.selectedOption = option;
     this.showCustomPicker = false;
-  
+
     const today = new Date();
     const formatDate = (date: Date) => format(date, 'yyyy-MM-dd');
-  
+
     this.endDate.setValue(formatDate(today));
-  
+
     switch (option) {
       case 'thisMonth':
         this.startDate.setValue(formatDate(startOfMonth(today)));
@@ -135,7 +145,6 @@ export class DateRangeFilterComponent implements OnInit {
 
     this.updateDataRange();
   }
-  
 
   toggleCustomPicker() {
     this.selectedOption = '';
@@ -161,4 +170,25 @@ export class DateRangeFilterComponent implements OnInit {
     if (typeof date === 'string') return date;
     return date.toISOString().split('T')[0];
   }
+
+  dateRangeValidator(group: AbstractControl): ValidationErrors | null {
+    const start = group.get('startDate')?.value;
+    const end = group.get('endDate')?.value;
+  
+    if (start && end && new Date(end) < new Date(start)) {
+      group.get('endDate')?.setErrors({ dateRangeInvalid: true });
+      return { dateRangeInvalid: true };
+    }
+  
+    if (group.get('endDate')?.hasError('dateRangeInvalid')) {
+      const errors = { ...group.get('endDate')?.errors };
+      delete errors['dateRangeInvalid'];
+      const hasOtherErrors = Object.keys(errors).length > 0;
+  
+      group.get('endDate')?.setErrors(hasOtherErrors ? errors : null);
+    }
+  
+    return null;
+  }
+  
 }
