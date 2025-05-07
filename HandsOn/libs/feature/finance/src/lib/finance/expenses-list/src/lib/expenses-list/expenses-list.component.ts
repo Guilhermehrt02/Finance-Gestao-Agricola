@@ -47,7 +47,7 @@ const columns: Column[] = [
     header: 'Descrição',
     type: 'text',
     sortable: false,
-    filterable: true,
+    filterable: false,
     visible: true,
     showToUser: true,
   },
