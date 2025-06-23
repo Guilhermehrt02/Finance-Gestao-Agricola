@@ -60,38 +60,38 @@ export class ExpenseComponentFacade {
     this.id = undefined;
   }
 
-    submit(expense: any) {
-        const receiptFile = expense.receiptFile;
+  submit(expense: any) {
+    const receiptFile = expense.receiptFile;
 
-        const finalizeSubmit = (updatedExpense: any) => {
-            if (this.id) {
-              this.updateExpense(updatedExpense);
-            } else {
-              this.addExpense(updatedExpense);
-            }
-        };
+    const finalizeSubmit = (updatedExpense: any) => {
+      if (this.id) {
+        this.updateExpense(updatedExpense);
+      } else {
+        this.addExpense(updatedExpense);
+      }
+    };
 
-        if (receiptFile) {
-            this.uploadFacade.uploadFile(receiptFile).subscribe({
-            next: (uploadResponse) => {
-                const receiptUrl = uploadResponse.fileUrl;
+    if (receiptFile) {
+      this.uploadFacade.uploadFile(receiptFile).subscribe({
+        next: (uploadResponse) => {
+          const receiptUrl = uploadResponse.fileUrl;
 
-                const updatedExpense = {
-                ...expense,
-                receiptUrl,
-                receiptFile: null,
-                };
-                
-                finalizeSubmit(updatedExpense);
-            },
-            error: () => {
-                this.loadingSubject.next(false);
-            },
-            });
-        } else {
-            finalizeSubmit(expense);
-        }
+          const updatedExpense = {
+            ...expense,
+            receiptUrl,
+            receiptFile: null,
+          };
+
+          finalizeSubmit(updatedExpense);
+        },
+        error: () => {
+          this.loadingSubject.next(false);
+        },
+      });
+    } else {
+      finalizeSubmit(expense);
     }
+  }
 
   addExpense(expense: Expense) {
     this.loadingSubject.next(true);

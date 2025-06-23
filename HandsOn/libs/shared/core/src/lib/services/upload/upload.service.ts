@@ -6,6 +6,7 @@ import { RequestService } from '../request/request.service';
 @Injectable({
   providedIn: 'root',
 })
+/// This service handles the upload of files to the server.
 export class UploadService extends RequestService {  
     uploadFile(file: File) {
         const formData = new FormData();
@@ -15,7 +16,6 @@ export class UploadService extends RequestService {
           .post<{ FileUrl : string }>(`${this.apiUrl}/upload/file`, formData)
           .pipe(
             catchError((error) => {
-              console.error('Erro no UploadService:', error);
               return throwError(() => error);
             })
           );
