@@ -29,17 +29,6 @@ Before starting, install the following dependencies on your system:
   - [HeidiSQL](https://www.heidisql.com/)
   - [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
-### 🛠️ Auxiliary Tools
-
-- [Git](https://git-scm.com/downloads)
-- [Visual Studio Code (VSCode)](https://code.visualstudio.com/download)
-  - Recommended extensions:
-    - [.NET Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.vscode-dotnet-pack)
-    - [Nx Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console)
-    - [Prettier - Code Formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-    - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-
----
 
 # ⚙️ How to Run the Project
 
@@ -103,18 +92,6 @@ Run the following command to download the required packages:
 ```sh
   dotnet restore
 ```
-
-### 3 - Create the Database and Apply Migrations
-
-- If the database does not exist, create it in MySQL.
-- Apply Entity Framework migrations:
-  ```sh
-  dotnet ef database update --verbose --project "src/Infrastructure" --startup-project "src/API" --context UsersDbContext
-  ```
-- To create new migrations, use:
-  ```sh
-   dotnet ef migrations add "migration_name" --verbose --project "src/Infrastructure" --startup-project "src/API" --context UsersDbContext -o Persistence/Migrations
-  ```
 
 ### 4 - Run the API
 
@@ -200,12 +177,3 @@ To use the application, go to the login page at `http://localhost:4200/sign-in` 
 - example4@gmail.com / test123 (Role: Manager)
 - example5@gmail.com / test123 (Role: Collaborator)
 
-## ⚠️ IMPORTANT
-
-When pushing changes to the repository, always use a separate branch for the task you are working on.
-
-```sh
-git checkout -b feat/task_123
-```
-
-Ensure you always update your local branch and check which branch you are modifying to avoid overwriting issues and code conflicts. When creating a **pull request**, request merging into the `develop` branch.
