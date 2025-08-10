@@ -1,3 +1,6 @@
+# Telas
+![Dashboard](docs/dashboard.png)
+
 # HandsOn - Project Setup
 
 This project uses **.NET 9** for the back-end and **Angular with Nx** for the front-end. Below are the detailed instructions to set up and run the development environment.
