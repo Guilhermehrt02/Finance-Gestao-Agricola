@@ -1,5 +1,8 @@
 # Telas
 ![Dashboard](docs/dashboard.png)
+![Filter](docs/filter.png)
+![Form](docs/form.png)
+![List](docs/list.png)
 
 # HandsOn - Project Setup
 
